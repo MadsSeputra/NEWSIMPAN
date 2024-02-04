@@ -11,6 +11,16 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ ('home') }}">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <!-- href-->
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+      </li><!-- End masterdataNav -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-archive"></i><span>Master Data</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -67,7 +77,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
+        <a class="nav-link collapsed" href="{{ route('login') }}">
           <i class="bi bi-box-arrow-in-right"></i>
           <!-- href-->
           <span>Log out</span>
@@ -99,7 +109,7 @@
     </li><!-- End Transaksi admin Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-login.html">
+      <a class="nav-link collapsed" href="{{ route('login') }}">
         <i class="bi bi-box-arrow-in-right"></i>
         <!-- href-->
         <span>Log out User</span>

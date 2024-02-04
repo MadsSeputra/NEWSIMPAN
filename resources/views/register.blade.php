@@ -96,7 +96,7 @@
                       <div class="form-check">
                         <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
                         <label class="form-check-label" for="acceptTerms"> Saya telah memasukkan data secara benar </label>
-                        <div class="invalid-feedback">You must agree before submitting.</div>
+                        <div class="invalid-feedback">kamu harus mencentang .</div>
                       </div>
                     </div>
                     <div class="col-12">
