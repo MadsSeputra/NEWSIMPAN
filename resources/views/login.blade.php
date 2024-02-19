@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head  >
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+  <title>SIMPAN SARANA LOGIN</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -29,13 +29,6 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Jan 29 2024 with Bootstrap v5.3.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -51,7 +44,7 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">SIMPANSARANA</span>
+                  <span class="d-none d-lg-block">SIMPANSARANANYA</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -60,35 +53,47 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Masuk ke dalam SIMPANSARANA</h5>
-                    <p class="text-center small">Masukkan username dan password anda</p>
+                    <h5 class="card-title text-center pb-0 fs-4">Masuk  ke dalam SIMPANSARANA</h5>
+                    <p class="text-center small">Masukkan email dan password anda</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <!-- session flass saat halaman error -->
+                  @if (Session::has('status'))
+                  <div class="alert alert-danger" role="alert">
+                    {{ Session::get('message') }}
+                  </div>
+                  @endif
+
+
+                  <form method= "POST" action="login" class="row g-3 needs-validation" novalidate >
+
+                    @csrf <!-- khusus digunakan saat memakai form -->
 
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label for="email" class="form-label">Email</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
+                        <input type="email" name="email" class="form-control" id="email" required>
                         <div class="invalid-feedback">Masukkan username.</div>
                       </div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" name="password" class="form-control" id="password" required>
                       <div class="invalid-feedback">Masukkan Password!</div>
                     </div>
-
+<!--
                     <div class="col-12">
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
                         <label class="form-check-label" for="rememberMe">Remember me</label>
                       </div>
+-->
+
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
+                      <button class="btn btn-primary w-100 form-control" type="submit"> <a href="home">Login</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">Belum memiliki akun? <a href="register">Buat akun</a></p>

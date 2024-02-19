@@ -11,7 +11,7 @@ class Dbsarana extends Model
     /*Step 2 setelah mengisi database/ migrations --> Konfigurasi (mass assignment) propoerti models agar mengizinkan 
     field manipulasi data ke dalam db*/ 
     protected $table = "dbsaranas";
-    protected $primaryKey = "id";
+    protected $primaryKey ="id";
     protected $fillable =[
         'nama_sarana',
         'jumlah_sarana'

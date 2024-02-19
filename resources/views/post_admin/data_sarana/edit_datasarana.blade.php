@@ -8,7 +8,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Form Layouts</h1>
+      <h1>Edit data sarana</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -22,7 +22,7 @@
       <div class="row">
         <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Tambah Data</h5>
+              <h5 class="card-title">Edit data sarana</h5>
               <!-- Vertical Form -->
               <form class="row g-3" action="{{ route('updatedatasarana', $datasarana->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf

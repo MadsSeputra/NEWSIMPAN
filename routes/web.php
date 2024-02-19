@@ -25,51 +25,71 @@ Route::get('/tes', function () {
     return view('welcome');
 });
 //
-Route::get('/', function () {
-    return view('post_admin/dashboard');
-});
+// Route::get('/', function () {
+//     return view('login');
+// });
 
 //route data sarana
 // Route::get('/datasarana', function () {
 //     return view('post_admin/data_sarana');
 // });
 
-
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [dashboard::class, 'dashboard'])->name('dashboard');
+
+
+
+Route::get('/logout', [AuthController::class, 'logout']);
+
+
+Route::get('/login', [AuthController::class,'proseslogin']);
+
+// Route::get('/home', function (){
+//     return 'kamu sudah login';
+// })-> middleware('auth::admin,web');
 
 //nyambungin roots di controller data sarana ke view
 // -> name (' nama route ')
-Route::get('/datasarana', [MasterDataController::class, 'datasarana'])->name('datasarana');
-Route::get('/tambahdatasarana', [MasterDataController::class, 'tambahdatasarana'])->name('tambahdatasarana');
-Route::post('/datasarana-insert', [MasterDataController::class, 'store'])->name('insert-datasarana');
-Route::get('/edit_datasarana/{id}', [MasterDataController::class, 'edit'])->name('editdatasarana');
-Route::put('/update_datasarana/{id}', [MasterDataController::class, 'update'])->name('updatedatasarana');
-Route::delete('/delete_datasarana/{id}', [MasterDataController::class, 'delete'])->name('data.delete');
+Route::middleware('guest')->group(function () {
+//Roots Login dan Logout
+Route::get('/', [AuthController::class, 'login'])->name('login'); //fungsi name = mengubah nama route 
+Route::post('login', [AuthController::class, 'proseslogin'])->name('proseslogin');
+
+Route:: get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/registrasi', [AuthController::class, 'prosesregistrasi'])->name('prosesregistrasi');
+});    
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/dashboard', [dashboard::class, 'dashboard'])->name('dashboard');
+    Route::get('/datasarana', [MasterDataController::class, 'datasarana'])->name('datasarana');
+    Route::get('/tambahdatasarana', [MasterDataController::class, 'tambahdatasarana'])->name('tambahdatasarana');
+    Route::post('/datasarana-insert', [MasterDataController::class, 'store'])->name('insert-datasarana');
+    Route::get('/edit_datasarana/{id}', [MasterDataController::class, 'edit'])->name('editdatasarana');
+    Route::put('/update_datasarana/{id}', [MasterDataController::class, 'update'])->name('updatedatasarana');
+    Route::delete('/delete_datasarana/{id}', [MasterDataController::class, 'delete'])->name('data.delete');
 
 
-Route::get('/datapeminjam', [MasterDataController::class, 'datapeminjam'])->name('datapeminjam');
+    Route::get('/dataterdaftar', [MasterDataController::class, 'dataterdaftar'])->name('dataterdaftar') ;
 
-// Jembatan penghubung controler side admin transaksi dengan View admin 
-Route::get('/transaksipeminjaman', [SideAdminTransaksi::class, 'transaksipeminjaman'])->name('transaksipeminjaman');
-Route::get('/transaksipengembalian', [SideAdminTransaksi::class, 'transaksipengembalian'])->name('transaksipengembalian');
+    // Jembatan penghubung controler side admin transaksi dengan View admin 
+    Route::get('/transaksipeminjaman', [SideAdminTransaksi::class, 'transaksipeminjaman'])->name('transaksipeminjaman');
+    Route::get('/transaksipengembalian', [SideAdminTransaksi::class, 'transaksipengembalian'])->name('transaksipengembalian');
 
-//Jembatan hub controller SideAdmin Laporan 
-Route::get('/laporanpeminjaman', [SideAdminLaporan::class, 'laporanpeminjaman'])->name('laporanpeminjaman');
-Route::get('/laporanpengembalian', [SideAdminLaporan::class, 'laporanpengembalian'])->name('laporanpengembalian');
+    //Jembatan hub controller SideAdmin Laporan 
+    Route::get('/laporanpeminjaman', [SideAdminLaporan::class, 'laporanpeminjaman'])->name('laporanpeminjaman');
+    Route::get('/laporanpengembalian', [SideAdminLaporan::class, 'laporanpengembalian'])->name('laporanpengembalian');
+});
 
+Route::middleware('auth:web')->group(function () {
 // Jembatan penghubungan controller informasi sarana
-Route::get('/informasisaranauser', [InformasiSaranaUser::class, 'informasisaranauser'])->name('informasisaranauser');
+Route::get('/informasisaranauser', [InformasiSaranaUser::class, 'informasisaranauser'])->name('informasisaranauser') ; // middleware akan berfungsi jika akun belum login maka akan di tendang ke halaman login
 
 //Jembatan penghubung antara controller Transaksi user ke view post_admin/transaksi_user
 Route:: get('/transaksiuser', [TransaksiUser::class, 'transaksiuser'])->name('transaksiuser');
+});
 
 //controller LOGIN ke view login
-Route:: get('/login', [AuthController::class, 'login'])->name('login');
+//Route:: get('/login', [AuthController::class, 'login'])->name('login');
 
 //controller Register ke view register
-Route:: get('/register', [AuthController::class, 'register'])->name('register');

@@ -60,50 +60,56 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Buat akun</h5>
-                    <p class="text-center small">Masukkan data secara lengkap untuk buat akun</p>
+                    <h5 class="card-title text-center pb-0 fs-4">Registrasi</h5>
+                    <p class="text-center small">Masukkan data secara lengkap untuk registrasi akun</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form class="row g-3 needs-validation" action="{{ route('prosesregistrasi') }}" method="POST" novalidate>
+                    {{ csrf_field() }}
                     <div class="col-12">
                       <label for="yourName" class="form-label">Nama Anda</label>
-                      <input type="text" name="name" class="form-control" id="yourName" required>
+                      <input type="text" name="nama" class="form-control" id="nama" required>
                       <div class="invalid-feedback">Tolong, masukkan nama anda!</div>
                     </div>
 
+                    <form class="row g-3 needs-validation" novalidate>
+                      <div class="col-12">
+                        <label for="yourName" class="form-label">No Telepon</label>
+                        <input type="number" name="no_telp" class="form-control" id="no_telp" required>
+                        <div class="invalid-feedback">Tolong, masukkan no telepon anda!</div>
+                      </div>
+
+                    <form class="row g-3 needs-validation" novalidate>
+                      <div class="col-12">
+                        <label for="yourName" class="form-label">Alamat</label>
+                        <input type="text" name="alamat" class="form-control" id="alamat" required>
+                        <div class="invalid-feedback">Tolong, masukkan alamat anda!</div>
+                      </div>
+
                     <div class="col-12">
                       <label for="yourEmail" class="form-label">Email Anda</label>
-                      <input type="email" name="email" class="form-control" id="yourEmail" required>
+                      <input type="email" name="email" class="form-control" id="email" required>
                       <div class="invalid-feedback">Tolong masukkan email anda!</div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Tolong masukkan username.</div>
-                      </div>
-                    </div>
-
-                    <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <input type="password" name="password" class="form-control" id="password" required>
                       <div class="invalid-feedback">Masukkan password anda!</div>
                     </div>
 
                     <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
-                        <label class="form-check-label" for="acceptTerms"> Saya telah memasukkan data secara benar </label>
-                        <div class="invalid-feedback">kamu harus mencentang .</div>
-                      </div>
+                      <label for="yourPassword" class="form-label">Konfirmasi Password</label>
+                      <input type="password" name="password_confirm" class="form-control" id="password_confirm" required>
+                      <div class="invalid-feedback">Masukkan password anda!</div>
                     </div>
+
+               
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Register</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Sudah memiliki akun? <a href="login">Log in</a></p>
+                      <p class="small mb-0">Sudah memiliki akun? <a href="{{ route('login') }}">Log in</a></p>
                     </div>
                   </form>
 

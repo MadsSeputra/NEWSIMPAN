@@ -5,13 +5,14 @@
 
 
     <ul class="sidebar-nav" id="sidebar-nav">
+      @if (Str::length(Auth::guard('admin')->user()) > 0)
         <li class="nav-heading">Admin</li>
 
       
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ ('home') }}">
+        <a class="nav-link collapsed" href="{{ route('dashboard') }}">
           <i class="bi bi-box-arrow-in-right"></i>
           <!-- href-->
           <span>Dashboard</span>
@@ -31,8 +32,8 @@
             </a>
           </li>
           <li>
-            <a href="{{ route('datapeminjam') }}">
-              <i class="bi bi-circle"></i><span>Data Peminjam</span>
+            <a href="{{ route('dataterdaftar') }}">
+              <i class="bi bi-circle"></i><span>Data terdaftar</span>
             </a>
           </li>
         </ul>
@@ -76,13 +77,13 @@
       </li><!-- End Laporan  Nav -->
 
 
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('login') }}">
           <i class="bi bi-box-arrow-in-right"></i>
           <!-- href-->
           <span>Log out</span>
         </a>
-      </li><!-- End Login Page Nav -->
+      </li><!-- End Login Page Nav --> --}}
 
     </ul>
 
@@ -90,6 +91,7 @@
     <!--TAMPILAN SIDE BAR USER-->
 
     <ul class="sidebar-nav" id="sidebar-nav">
+      @elseif (Str::length(Auth::guard('web')->user()) > 0)
       <li class="nav-heading">User</li>
 
     </li><!-- End Dashboard Nav -->
@@ -108,14 +110,14 @@
       
     </li><!-- End Transaksi admin Nav -->
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('login') }}">
+    
+    @endif<li class="nav-item">
+      <a class="nav-link collapsed" href="{{ route('logout') }}">
         <i class="bi bi-box-arrow-in-right"></i>
         <!-- href-->
-        <span>Log out User</span>
+        <span>Log out </span>
       </a>
     </li><!-- End Login Page Nav -->
-
   </ul>
 
   </aside><!-- End Sidebar-->

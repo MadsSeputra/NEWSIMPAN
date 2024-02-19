@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 //import model dbsarana
-use App\Models\Dbsarana;
+use App\Models\UserLog;
 
+use App\Models\Dbsarana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -30,6 +31,7 @@ class MasterDataController extends Controller
         // menampilkan view 
         $tambahdatasarana = Dbsarana::all();
         return view('post_admin.data_sarana.tambah_datasarana', compact('tambahdatasarana'));
+       
         
     }
     public function store(Request $request)
@@ -73,10 +75,17 @@ class MasterDataController extends Controller
         return redirect()->route('datasarana')->with('delete', 'Data berhasil dihapus');
     }
 
+
+
     // function data bernama datapeminjam ||  controlller untuk data peminjam
-    public function datapeminjam()
+    //menampilkan database ke view dat terdaftar
+    public function dataterdaftar()
     {
-        return view('post_admin/data_peminjam');
+        
+        $dataterdaftar = UserLog::all();
+        return view('post_admin.data_terdaftar.data_terdaftar', compact('dataterdaftar'));
+        
+        return view('post_admin.data_terdaftar.data_terdaftar');
     }
 
 }
