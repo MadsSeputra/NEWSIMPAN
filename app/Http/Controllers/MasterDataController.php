@@ -15,23 +15,20 @@ class MasterDataController extends Controller
     //controller untuk menu data sarana
     public function datasarana()
     {
-        // get dbsarana
         //variabel penyimpan data = Memanggil model Dbsarana::methode latest (urut data berdasar tebaru)()-> paginate (5) membatasi agar menampilkan 5 data v vg
         //$dbsarana = Dbsarana::latest()->paginate(5);
 
-        $datasarana = Dbsarana::all();
+        $datasarana = Dbsarana::all(); //Menmapilkan database 
         return view('post_admin.data_sarana.data_sarana', compact('datasarana'));
         
+        //fungsi comppact adalah mengirimkan variabel $dbsarana ke view 
 
-        //render view with Dbsarana , fungsi comppact adalah mengirimkan variabel $dbsarana ke view 
-        //return view('post_admin/data_sarana', compact('dbsarana'));
     }
     public function tambahdatasarana()
     {
         // menampilkan view 
         $tambahdatasarana = Dbsarana::all();
         return view('post_admin.data_sarana.tambah_datasarana', compact('tambahdatasarana'));
-       
         
     }
     public function store(Request $request)
@@ -77,7 +74,7 @@ class MasterDataController extends Controller
 
 
 
-    // function data bernama datapeminjam ||  controlller untuk data peminjam
+    // function data bernama dataterdaftar ||  controlller untuk data terdaftar
     //menampilkan database ke view dat terdaftar
     public function dataterdaftar()
     {

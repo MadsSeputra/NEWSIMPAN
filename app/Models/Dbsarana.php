@@ -16,4 +16,11 @@ class Dbsarana extends Model
         'nama_sarana',
         'jumlah_sarana'
     ];
+
+    //mendefinisikan one to many | karena satu saranan dapat dimiliki oleh banyak pengguna
+    // public function UserLog()
+    // {
+    //     return $this->hasMany(UserLog::class, 'id_sarana','id');
+    // }
+
 }

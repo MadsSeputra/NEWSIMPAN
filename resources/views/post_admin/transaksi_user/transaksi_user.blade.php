@@ -45,11 +45,15 @@
               <div class="card-body">
                 <h5 class="card-title" style="padding-bottom: 2rem;">Data Transaksi Pengembalian</h5>
 
-                @php
+                  <!-- Button pengajuan peminjaman --> 
+              <a href={{ route('tambahpengajuan') }}><button type="button" class="btn btn-secondary">Pengajuan Peminjaman</button></a> 
+              <!-- End Button pengajuan peminjaman --
+
+                {{-- @php
                 $currentPage = request()->get('page', 1);
                 $itemsPerPage = 5; // Jumlah item per halaman (sesuaikan dengan paginate() Anda)
                 $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
-                @endphp
+                @endphp --}}
 
     <!-- Table with hoverable rows -->
     <table class="table table-hover">
@@ -72,22 +76,26 @@
 
 <!-- letak koneksi database pake foreach( $... as $...) -->
 
-      {{-- @foreach($dataterdaftar as $data=>$item) <!-- Untuk menampilkan database sesuai dengan variabel di controller-->  --}}
+      @foreach($peminjamans as $key=>$peminjaman) <!-- Untuk menampilkan database sesuai dengan variabel di controller--> 
 
       <tbody>
-        {{-- <tr>
-          <td> <p>{{ $startNumber + $loop->index }}</p> </td>
-          <td>MR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $item->id }}</td>
-          <td>{{ $item->nama }}</td>
-          <td>{{ $item->email }}</td>
-          <td>{{ $item->no_telp }}</td>
-          <td>{{ $item->alamat}}</td>
+        <tr>
+          <td>{{ $startNumber + $key }}</td>
+          <td>TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $peminjaman->id }}</td>
+          <td>{{ $peminjaman->userLog->nama }}</td>
+          <td>{{ $peminjaman->userLog->no_telp }}</td>
+          <td>{{ $peminjaman->dbsarana->nama_sarana }}</td>
+          <td>{{ $peminjaman->dbsarana->jumlah_sarana }}</td>
+          <td>{{ $peminjaman->tanggal_pinjam }}</td>
+          <td>{{ $peminjaman->tanggal_kembali }}</td>
+          <td>{{ $peminjaman->keterangan }}</td>
+          <td>{{ $peminjaman->status }}</td>
         </tr>
-        @endforeach --}}
+        
+        @endforeach
       </tbody>
     </table>
-    <!-- End Table with hoverable rows -->
-
+   
   </div>
 </div>
-@section('content')
+@section('content') 

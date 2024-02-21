@@ -36,5 +36,6 @@ class UserLog extends Authenticatable
         'password' => 'hashed',
     ];
 
+
     
 }

@@ -106,4 +106,4 @@
     </section>
 
   </main><!-- End #main -->
-@section('content')
+{{-- @section('content') --}}

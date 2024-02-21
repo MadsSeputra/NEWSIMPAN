@@ -62,8 +62,10 @@ Route::post('/registrasi', [AuthController::class, 'prosesregistrasi'])->name('p
 });    
 Route::middleware('auth:admin')->group(function () {
     Route::get('/dashboard', [dashboard::class, 'dashboard'])->name('dashboard');
+
     Route::get('/datasarana', [MasterDataController::class, 'datasarana'])->name('datasarana');
     Route::get('/tambahdatasarana', [MasterDataController::class, 'tambahdatasarana'])->name('tambahdatasarana');
+    //route post (menyimpan data baru ke dalam sistem | ex : mengirim form untuk disimpan | Digunakan untuk CREATE)
     Route::post('/datasarana-insert', [MasterDataController::class, 'store'])->name('insert-datasarana');
     Route::get('/edit_datasarana/{id}', [MasterDataController::class, 'edit'])->name('editdatasarana');
     Route::put('/update_datasarana/{id}', [MasterDataController::class, 'update'])->name('updatedatasarana');
@@ -87,6 +89,11 @@ Route::get('/informasisaranauser', [InformasiSaranaUser::class, 'informasisarana
 
 //Jembatan penghubung antara controller Transaksi user ke view post_admin/transaksi_user
 Route:: get('/transaksiuser', [TransaksiUser::class, 'transaksiuser'])->name('transaksiuser');
+Route:: get('/tambahpengajuan', [TransaksiUser::class, 'tambahpengajuan'])->name('tambahpengajuan');
+Route::post('/pengajuan-insert', [TransaksiUser::class, 'store'])->name('insert-pengajuan');
+
+
+
 });
 
 //controller LOGIN ke view login
