@@ -28,36 +28,61 @@
             <form class="row g-3" action="{{ route('insert-pengajuan') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                  <!-- Nama Peminjam (otomatis sesuai akun yang login) -->
-                  <div class="form-group">
-                    <label for="nama_peminjam">Nama Peminjam</label>
-                    <input type="text" name="nama_peminjam" class="form-control" value="{{ Auth::user()->nama }}" readonly>
-                </div>
-
-              <!-- No Telp -->
-                            <div class="form-group">
-                                <label for="no_telp">No Telp</label>
-                                <input type="text" name="no_telp" class="form-control" value="{{ Auth::user()->no_telp }}" readonly>
+                              <!-- Nama Peminjam (otomatis sesuai akun yang login) -->
+                              <div class="form-group d-none" >
+                                <label for="nama_peminjam">Nama Peminjam</label>
+                                <input type="text" name="id_userlog" id="id_userlog" class="form-control" value="{{ Auth::user()->id}}" readonly>
                             </div>
 
-                            <!-- Sarana (pilihan dengan button memilih) -->
+                      
+
+                            <!-- Sarana (pilihan dengan dropdown select) -->
                             <div class="form-group">
-                                <label for="id_dbsarana">Sarana</label>
-                                <div>
-                                    @foreach($dbsaranas as $dbsarana)
-                                        <button type="button" class="btn btn-primary btn-sarana" data-id="{{ $dbsarana->id }}" data-jumlah="{{ $dbsarana->jumlah_sarana }}">
-                                            {{ $dbsarana->nama_sarana }}
-                                        </button>
-                                    @endforeach
-                                    <input type="hidden" name="id_dbsarana" id="selected-sarana" value="">
-                                </div>
+                              <label for="id_dbsarana">Sarana</label>
+                              <select class="form-select" name="id_dbsarana" id="id_dbsarana" required>
+                                  <option value="" selected disabled>Pilih Sarana</option>
+                                  @foreach($dbsaranas as $dbsarana)
+                                      <option value="{{ $dbsarana->id }}" data-jumlah="{{ $dbsarana->jumlah_sarana }}">
+                                          {{ $dbsarana->nama_sarana }}
+                                      </option>
+                                  @endforeach
+                              </select>
                             </div>
+
 
                             <!-- Jumlah Sarana (otomatis sesuai dengan sarana yang dipilih) -->
                             <div class="form-group">
-                                <label for="jumlah_sarana">Jumlah Sarana</label>
-                                <input type="number" name="jumlah_sarana" class="form-control" id="jumlah-sarana" >
+                              <label for="jumlah_sarana">Jumlah Sarana</label>
+                              <input type="number" name="jumlah_sarana" class="form-control" id="jumlah-sarana">
                             </div>
+
+                            <script>
+                              // Menggunakan JavaScript untuk mengatur jumlah_sarana berdasarkan pilihan sarana
+                              document.getElementById('id_dbsarana').addEventListener('change', function() {
+                                  var selectedOption = this.options[this.selectedIndex];
+                                  var maxJumlah = parseInt(selectedOption.getAttribute('data-jumlah'));
+                                  
+                                  // Reset nilai jika melebihi jumlah yang tersedia
+                                  var jumlahSaranaInput = document.getElementById('jumlah-sarana');
+                                  if (parseInt(jumlahSaranaInput.value) > maxJumlah) {
+                                      jumlahSaranaInput.value = '';
+                                  }
+                                  jumlahSaranaInput.max = maxJumlah;
+                                  jumlahSaranaInput.readOnly = false;
+                              });
+                          
+                              // Validasi jumlah sarana saat form disubmit
+                              document.querySelector('form').addEventListener('submit', function(event) {
+                                  var selectedOption = document.getElementById('id_dbsarana').options[document.getElementById('id_dbsarana').selectedIndex];
+                                  var maxJumlah = parseInt(selectedOption.getAttribute('data-jumlah'));
+                                  var jumlahSaranaInput = document.getElementById('jumlah-sarana');
+                          
+                                  if (parseInt(jumlahSaranaInput.value) > maxJumlah) {
+                                      alert('Jumlah sarana melebihi yang tersedia!');
+                                      event.preventDefault(); // Mencegah pengajuan formulir
+                                  }
+                              });
+                          </script>
 
                             <!-- Tanggal Pinjam -->
                             <div class="form-group">
@@ -78,9 +103,9 @@
                             </div>
 
                             <!-- Status (otomatis belum terkonfirmasi) -->
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <label for="status">Status</label>
-                                <input type="text" name="status" class="form-control" value="Belum Terkonfirmasi" readonly>
+                                <input type="text" name="status" class="form-control" value="DALAM-PROSES" readonly>
                             </div>
 
                 <div class="text-center">

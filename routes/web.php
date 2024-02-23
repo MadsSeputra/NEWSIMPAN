@@ -5,6 +5,7 @@ use App\Http\Controllers\dashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TransaksiUser;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Usercontroller;
 use App\Http\Controllers\SideAdminLaporan;
 use App\Http\Controllers\SideAdminTransaksi;
 use App\Http\Controllers\InformasiSaranaUser;
@@ -92,6 +93,8 @@ Route:: get('/transaksiuser', [TransaksiUser::class, 'transaksiuser'])->name('tr
 Route:: get('/tambahpengajuan', [TransaksiUser::class, 'tambahpengajuan'])->name('tambahpengajuan');
 Route::post('/pengajuan-insert', [TransaksiUser::class, 'store'])->name('insert-pengajuan');
 
+//Route untuk profil user
+Route:: get('/profiluser', [Usercontroller::class, 'profiluser'])->name('profiluser');
 
 
 });
