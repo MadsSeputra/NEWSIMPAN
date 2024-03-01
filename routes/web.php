@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\dashboard;
 // setiap membuat controller baru harus import class
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TransaksiUser;
 use App\Http\Controllers\AuthController;
@@ -78,6 +79,7 @@ Route::middleware('auth:admin')->group(function () {
     // Jembatan penghubung controler side admin transaksi dengan View admin 
     Route::get('/transaksipeminjaman', [SideAdminTransaksi::class, 'transaksipeminjaman'])->name('transaksipeminjaman');
     Route::get('/transaksipengembalian', [SideAdminTransaksi::class, 'transaksipengembalian'])->name('transaksipengembalian');
+    Route::post('/peminjaman-konfirmasi/{id}', [SideAdminTransaksi::class, 'processKonfirmasiPeminjaman'])->name('konfirmasipeminjaman');
 
     //Jembatan hub controller SideAdmin Laporan 
     Route::get('/laporanpeminjaman', [SideAdminLaporan::class, 'laporanpeminjaman'])->name('laporanpeminjaman');

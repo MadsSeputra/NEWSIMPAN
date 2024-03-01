@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\UserLog;
 
 use App\Models\Dbsarana;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -18,8 +19,13 @@ class MasterDataController extends Controller
         //variabel penyimpan data = Memanggil model Dbsarana::methode latest (urut data berdasar tebaru)()-> paginate (5) membatasi agar menampilkan 5 data v vg
         //$dbsarana = Dbsarana::latest()->paginate(5);
 
-        $datasarana = Dbsarana::all(); //Menmapilkan database 
-        return view('post_admin.data_sarana.data_sarana', compact('datasarana'));
+         // Mengambil semua data dari tabel Dbsarana
+        $datasarana = Dbsarana::all();
+
+        // Mengambil jumlah yang telah dipinjam dari tabel Peminjaman
+        $jumlahDipinjam = Peminjaman::count('jumlah');
+
+    return view('post_admin.data_sarana.data_sarana', compact('datasarana', 'jumlahDipinjam'));
         
         //fungsi comppact adalah mengirimkan variabel $dbsarana ke view 
 

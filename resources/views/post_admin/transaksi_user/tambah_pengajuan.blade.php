@@ -29,13 +29,10 @@
                 @csrf
 
                               <!-- Nama Peminjam (otomatis sesuai akun yang login) -->
-                              <div class="form-group d-none" >
+                            <div class="form-group d-none" >
                                 <label for="nama_peminjam">Nama Peminjam</label>
                                 <input type="text" name="id_userlog" id="id_userlog" class="form-control" value="{{ Auth::user()->id}}" readonly>
                             </div>
-
-                      
-
                             <!-- Sarana (pilihan dengan dropdown select) -->
                             <div class="form-group">
                               <label for="id_dbsarana">Sarana</label>
@@ -52,8 +49,8 @@
 
                             <!-- Jumlah Sarana (otomatis sesuai dengan sarana yang dipilih) -->
                             <div class="form-group">
-                              <label for="jumlah_sarana">Jumlah Sarana</label>
-                              <input type="number" name="jumlah_sarana" class="form-control" id="jumlah-sarana">
+                              <label for="jumlah">Jumlah Sarana</label>
+                              <input type="number" name="jumlah" class="form-control" id="jumlah">
                             </div>
 
                             <script>
@@ -63,7 +60,7 @@
                                   var maxJumlah = parseInt(selectedOption.getAttribute('data-jumlah'));
                                   
                                   // Reset nilai jika melebihi jumlah yang tersedia
-                                  var jumlahSaranaInput = document.getElementById('jumlah-sarana');
+                                  var jumlahSaranaInput = document.getElementById('jumlah');
                                   if (parseInt(jumlahSaranaInput.value) > maxJumlah) {
                                       jumlahSaranaInput.value = '';
                                   }
@@ -75,7 +72,7 @@
                               document.querySelector('form').addEventListener('submit', function(event) {
                                   var selectedOption = document.getElementById('id_dbsarana').options[document.getElementById('id_dbsarana').selectedIndex];
                                   var maxJumlah = parseInt(selectedOption.getAttribute('data-jumlah'));
-                                  var jumlahSaranaInput = document.getElementById('jumlah-sarana');
+                                  var jumlahSaranaInput = document.getElementById('jumlah');
                           
                                   if (parseInt(jumlahSaranaInput.value) > maxJumlah) {
                                       alert('Jumlah sarana melebihi yang tersedia!');

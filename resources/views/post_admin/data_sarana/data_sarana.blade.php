@@ -63,6 +63,8 @@
                     <th>Id Sarana</th>
                     <th>Nama Sarana</th>
                     <th>Jumlah Sarana</th>
+                    <th>Terpakai</th>
+                    <th>Tersedia</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -75,6 +77,8 @@
                     <td>Sar-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $item->id }}</td>
                     <td>{{ $item->nama_sarana }}</td>
                     <td>{{ $item->jumlah_sarana }}</td>
+                    <td>{{ $item->jumlah_terpakai }}</td>
+                    <td>{{ (int)$item->jumlah_sarana - (int)$item->jumlah_terpakai }}</td>
                     <td class="d-flex align-items-center">
                       <a href="{{ route('editdatasarana', ['id' => $item->id]) }}" class="btn btn-primary mb-3" style="margin-right: 5px;">
                           <i class="bi bi-pencil-square"></i> Edit

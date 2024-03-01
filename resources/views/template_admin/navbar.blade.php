@@ -170,13 +170,20 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            @if (Str::length(Auth::guard('admin')->user()) > 0)
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->nama}}</span>
+            @elseif (Str::length(Auth::guard('web')->user()) > 0)
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->nama}}</span>
+            @endif
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              @if (Str::length(Auth::guard('admin')->user()) > 0)
+              <h6>{{ Auth::user()->nama}}</h6>
+              @elseif (Str::length(Auth::guard('web')->user()) > 0)
+              <h6>{{ Auth::user()->nama}}</h6>
+              @endif
             </li>
             <li>
               <hr class="dropdown-divider">

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_userlog');
             $table->unsignedBigInteger('id_dbsarana');
+            $table->string('jumlah');
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali');
             $table->string('keterangan');

@@ -12,18 +12,18 @@ class TransaksiUser extends Controller
 {
     public function transaksiuser()
     {
-        $peminjamans = Peminjaman::with(['userLog', 'dbsarana'])->get();
-               // Menghitung nomor urut pada halaman saat ini
-               $currentPage = request()->get('page', 1);
-               $itemsPerPage = 5;
-               $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
-            
-        return view('post_admin/transaksi_user/transaksi_user', [
-            'peminjamans' => $peminjamans,
-            'startNumber' => $startNumber,
-        ]);
+        // Mendapatkan id user yang sudah login
+        $user = Auth::guard('web')->user();
 
-    }
+        // Mengambil peminjaman berdasarkan id user yang sudah login
+        $peminjamans =  Peminjaman::with(['userLog', 'dbsarana'])->where('id_userlog', $user->id)->get();
+        // Menghitung nomor urut pada halaman saat ini
+        $currentPage = request()->get('page', 1);
+        $itemsPerPage = 5;
+        $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
+
+        return view('post_admin.transaksi_user.transaksi_user', compact('peminjamans', 'startNumber'));
+        }
 
     public function tambahpengajuan()
     {
@@ -48,8 +48,37 @@ class TransaksiUser extends Controller
             //     return redirect()->back()->withErrors(['Gagal menambahkan data mobil.']);
             // }
         
-        $peminjamans = Peminjaman::create($request->all());
-        if ($peminjamans) {
+        // $peminjamans = Peminjaman::create($request->all());
+         // Lakukan validasi form peminjaman
+        $request->validate([
+            'id_userlog' => 'required',
+            'id_dbsarana' => 'required',
+            'jumlah' => 'required|numeric|min:1',
+            'tanggal_pinjam' => 'required',
+            'tanggal_kembali' => 'required',
+            'keterangan' => 'required',
+            'status' => 'required',
+            // Tambahkan aturan validasi lainnya sesuai kebutuhan
+        ]);
+
+        // Proses peminjaman
+        $peminjaman = new Peminjaman();
+        $peminjaman->id_userlog = $request->id_userlog;
+        $peminjaman->id_dbsarana = $request->id_dbsarana;
+        $peminjaman->jumlah = $request->jumlah;
+        $peminjaman->tanggal_pinjam = $request->tanggal_pinjam;
+        $peminjaman->tanggal_kembali = $request->tanggal_kembali;
+        $peminjaman->keterangan = $request->keterangan;
+        $peminjaman->status = $request->status;
+        // Tambahan proses lainnya sesuai kebutuhan
+        $peminjaman->save();
+
+        // Mengurangi jumlah terpakai pada sarana yang dipinjam
+        $sarana = Dbsarana::find($request->id_dbsarana);
+        $sarana->jumlah_terpakai = (int)$sarana->jumlah_terpakai + (int)$request->jumlah;
+        $sarana->save();
+
+        if ($peminjaman) {
             Session::flash('status', 'success');
             Session::flash('message', 'Tambah Data Sarana Berhasil');
             return redirect()->route('transaksiuser');

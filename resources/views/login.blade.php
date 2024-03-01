@@ -90,11 +90,12 @@
                         <label class="form-check-label" for="rememberMe">Remember me</label>
                       </div>
 -->
-
-                    </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100 form-control" type="submit"> <a href="home">Login</button>
+                      <button class="btn btn-primary w-100 form-control" type="submit">
+                          <a href="home" style="color: white;">Login</a>
+                      </button>
                     </div>
+
                     <div class="col-12">
                       <p class="small mb-0">Belum memiliki akun? <a href="register">Buat akun</a></p>
                     </div>

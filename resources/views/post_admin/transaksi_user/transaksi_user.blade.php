@@ -61,8 +61,6 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Id Transaksi</th>
-          <th scope="col">Nama Peminjam </th>
-          <th scope="col">No Telp </th>
           <th scope="col">Sarana </th>
           <th scope="col">Jumlah</th>
           <th scope="col">Tanggal Pinjam</th>
@@ -82,10 +80,8 @@
         <tr>
           <td>{{ $startNumber + $key }}</td>
           <td>TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $peminjaman->id }}</td>
-          <td>{{ $peminjaman->userLog->nama }}</td>
-          <td>{{ $peminjaman->userLog->no_telp }}</td>
           <td>{{ $peminjaman->dbsarana->nama_sarana }}</td>
-          <td>{{ $peminjaman->dbsarana->jumlah_sarana }}</td>
+          <td>{{ $peminjaman->jumlah }}</td>
           <td>{{ $peminjaman->tanggal_pinjam }}</td>
           <td>{{ $peminjaman->tanggal_kembali }}</td>
           <td>{{ $peminjaman->keterangan }}</td>
