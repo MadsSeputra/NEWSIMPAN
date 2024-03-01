@@ -30,11 +30,11 @@
     </div>
     @elseif(Session::has('edit'))
     <div class="alert alert-success" role="alert">
-      Data Berhasil Diedit
+      {{ session('edit') }}
     </div>
-    @elseif(Session::has('konfirmasi'))
-    <div class="alert alert-success" role="alert">
-      Konfirmasi Pinjaman Berhasil
+    @elseif(Session::has('batal'))
+    <div class="alert alert-danger" role="alert">
+      {{ session('batal') }}
     </div>
     @endif
     <!-- End JS Validasi  -->
@@ -94,12 +94,12 @@
                                   <i class="bi bi-check-circle"></i>
                               </button>
                           </form>
-                              <form action="{{ route('data.delete', $peminjaman->id) }}" method="POST">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button type="submit" class="btn btn-danger">
-                                      <i class="bi bi-exclamation-octagon"></i>
-                                  </button>
+                              <form action="{{ route('batalpeminjaman', $peminjaman->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-danger">
+                                  <i class="bi bi-exclamation-octagon"></i>
+                                </button>
                               </form>
                           </td>
                       </tr>

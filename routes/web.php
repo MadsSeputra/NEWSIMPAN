@@ -80,6 +80,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/transaksipeminjaman', [SideAdminTransaksi::class, 'transaksipeminjaman'])->name('transaksipeminjaman');
     Route::get('/transaksipengembalian', [SideAdminTransaksi::class, 'transaksipengembalian'])->name('transaksipengembalian');
     Route::post('/peminjaman-konfirmasi/{id}', [SideAdminTransaksi::class, 'processKonfirmasiPeminjaman'])->name('konfirmasipeminjaman');
+    Route::patch('/batal-peminjaman/{id}', [SideAdminTransaksi::class, 'batalkanPesanan'])->name('batalpeminjaman');
 
     //Jembatan hub controller SideAdmin Laporan 
     Route::get('/laporanpeminjaman', [SideAdminLaporan::class, 'laporanpeminjaman'])->name('laporanpeminjaman');

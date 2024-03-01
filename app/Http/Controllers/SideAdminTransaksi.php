@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dbsarana;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,15 @@ class SideAdminTransaksi extends Controller
     //controller menu transaksi pengembalian
     public function transaksipengembalian()
     {
-        return view ('post_admin/transaksi_pengembalian');
+        $pengembalian = Peminjaman::with(['userLog', 'dbsarana'])
+        ->where('status', 'DITERIMA')
+        ->get();
+        // Menghitung nomor urut pada halaman saat ini
+        $currentPage = request()->get('page', 1);
+        $itemsPerPage = 5;
+        $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
+     
+        return view('post_admin/transaksi_pengembalian', compact('pengembalian', 'startNumber'));
     }
 
     public function processKonfirmasiPeminjaman(Request $request, $id)
@@ -55,5 +64,19 @@ class SideAdminTransaksi extends Controller
         //     ->send(new SendEmail($data));
 
         return redirect()->route('transaksipeminjaman')->with('konfirmasi', 'Konfirmasi pesanan berhasil');
+    }
+
+    public function batalkanPesanan($id)
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman->status = 'DIBATALKAN';
+        $peminjaman->save();
+
+        // Mengurangi jumlah terpakai pada sarana yang dipinjam
+        $sarana = Dbsarana::find($peminjaman->id_dbsarana);
+        $sarana->jumlah_terpakai -= $peminjaman->jumlah;
+        $sarana->save();
+
+        return redirect()->route('transaksipeminjaman')->with('batal', 'Pesanan berhasil dibatalkan.');
     }
 }

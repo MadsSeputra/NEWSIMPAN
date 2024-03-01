@@ -38,7 +38,7 @@
                     <th> No </th>
                     <th>Id Sarana</th>
                     <th>Nama Sarana</th>
-                    <th>Jumlah Sarana</th>
+                    <th>Sarana Tersedia</th>
                 </tr>
 
               </thead>
@@ -48,7 +48,7 @@
                         <td> <p>{{ $startNumber + $loop->index }}</p> </td>
                         <td>Sar-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $item->id }}</td>
                         <td>{{ $item->nama_sarana }}</td>
-                        <td>{{ $item->jumlah_sarana }}</td>
+                        <td>{{ (int)$item->jumlah_sarana - (int)$item->jumlah_terpakai }}</td>
                     </tr>
                     
                 @endforeach

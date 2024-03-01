@@ -14,7 +14,8 @@ class Dbsarana extends Model
     protected $primaryKey ="id";
     protected $fillable =[
         'nama_sarana',
-        'jumlah_sarana'
+        'jumlah_sarana',
+        'jumlah_terpakai'
     ];
 
     //mendefinisikan one to many | karena satu saranan dapat dimiliki oleh banyak pengguna
