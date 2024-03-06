@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendEmail;
 use App\Models\Dbsarana;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SideAdminTransaksi extends Controller
 {
@@ -62,7 +64,14 @@ class SideAdminTransaksi extends Controller
 
         // Mail::to($request->recipient_email) // Menggunakan alamat email penerima dari input form
         //     ->send(new SendEmail($data));
+         // Kirim email konfirmasi
+         $data = [
+            'id_peminjam' => $konfirmasipeminjaman->id,
+            'nama' => $konfirmasipeminjaman->userLog->nama,
+        ];
 
+        Mail::to($request->recipient_email) // Menggunakan alamat email penerima dari input form
+            ->send(new SendEmail($data));
         return redirect()->route('transaksipeminjaman')->with('konfirmasi', 'Konfirmasi pesanan berhasil');
     }
 
@@ -79,4 +88,18 @@ class SideAdminTransaksi extends Controller
 
         return redirect()->route('transaksipeminjaman')->with('batal', 'Pesanan berhasil dibatalkan.');
     }
+    public function selesaikanPesanan($id)
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman->status = 'SELESAI';
+        $peminjaman->save();
+
+        // Mengurangi jumlah terpakai pada sarana yang dipinjam
+        $sarana = Dbsarana::find($peminjaman->id_dbsarana);
+        $sarana->jumlah_terpakai -= $peminjaman->jumlah;
+        $sarana->save();
+
+        return redirect()->route('transaksipengembalian')->with('selesai', 'Pinjaman berhasil dikembalikan.');
+    }
+
 }

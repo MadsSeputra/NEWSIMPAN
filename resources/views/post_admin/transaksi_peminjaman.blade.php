@@ -90,6 +90,9 @@
                                       <option value="DITERIMA">DITERIMA</option>
                                   </select>
                               </div>
+                              <div class="flex items-center d-none">
+                                <input type="email" name="recipient_email" value="{{ $peminjaman->userLog->email }}" placeholder="Alamat Email Penerima" required >
+                              </div>
                               <button type="submit" class="btn btn-success" style="margin-right: 5px;">
                                   <i class="bi bi-check-circle"></i>
                               </button>

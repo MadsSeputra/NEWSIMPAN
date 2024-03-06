@@ -45,7 +45,6 @@
             <div class="card-body">
               <h5 class="card-title" style="padding-bottom: 2rem;">Data Transaksi Peminjaman Dalam Proses</h5> 
                 <div class="container mb-2">
-                  <form id="filterForm">
                   <div class="row">
                       <div class="col-md-2 col-sm-6">
                           <label for="bulan" class="form-label">Bulan:</label>
@@ -72,8 +71,7 @@
                           <button class="btn btn-primary mt-md-2" type="submit">Cetak Data</button>
                       </div>
                   </div>
-                  </form>
-                </div>
+              </div>
               <div class="table-responsive">
                 <table class="table table-hover">
                   <thead>
@@ -94,19 +92,19 @@
 
                     <!-- letak koneksi database pake foreach( $... as $...) -->
 
-                    @foreach($pengembalian as $key => $pengembalian)
+                    @foreach($batal as $key => $batal)
                     <tbody>
                         <tr>
                             <td>{{ $startNumber + $key }}</td>
-                            <td>TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $pengembalian->id }}</td>
-                            <td>{{ $pengembalian->userLog->nama }}</td>
-                            <td>{{ $pengembalian->userLog->no_telp }}</td>
-                            <td>{{ $pengembalian->dbsarana->nama_sarana }}</td>
-                            <td>{{ $pengembalian->jumlah }}</td>
-                            <td>{{ $pengembalian->tanggal_pinjam }}</td>
-                            <td>{{ $pengembalian->tanggal_kembali }}</td>
-                            <td>{{ $pengembalian->keterangan }}</td>
-                            <td>{{ $pengembalian->status }}</td>
+                            <td>TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $batal->id }}</td>
+                            <td>{{ $batal->userLog->nama }}</td>
+                            <td>{{ $batal->userLog->no_telp }}</td>
+                            <td>{{ $batal->dbsarana->nama_sarana }}</td>
+                            <td>{{ $batal->jumlah }}</td>
+                            <td>{{ $batal->tanggal_pinjam }}</td>
+                            <td>{{ $batal->tanggal_kembali }}</td>
+                            <td>{{ $batal->keterangan }}</td>
+                            <td>{{ $batal->status }}</td>
                         </tr>
                     </tbody>
                     @endforeach              
@@ -118,27 +116,5 @@
         </div>
       </div>
     </section>
-     <!-- Tambahkan script JavaScript -->
-     <script>
-      // Tangkap elemen form
-      const filterForm = document.getElementById('filterForm');
-  
-      // Tangkap elemen select bulan dan tahun
-      const bulanSelect = document.getElementById('bulan');
-      const tahunInput = document.getElementById('tahun');
-  
-      // Tambahkan event listener untuk mengirimkan permintaan cetak laporan
-      filterForm.addEventListener('submit', function(event) {
-          event.preventDefault();
-  
-          // Ambil nilai bulan dan tahun yang dipilih
-          const bulan = bulanSelect.value;
-          const tahun = tahunInput.value;
-  
-          // Kirim permintaan cetak laporan dengan parameter bulan dan tahun
-          window.location.href = '{{ route('lihatpengembalian', ['tahun' => 'tahun_value', 'bulan' => 'bulan_value']) }}'
-              .replace('tahun_value', tahun)
-              .replace('bulan_value', bulan);
-      });
-  </script>
+
 @endsection

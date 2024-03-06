@@ -43,7 +43,7 @@ class MasterDataController extends Controller
         $datasarana = Dbsarana::create($request->all());
         if ($datasarana) {
             Session::flash('status', 'success');
-            Session::flash('message', 'Tambah Data Sarana Berhasil');
+            Session::flash('tambah', 'Tambah Data Sarana Berhasil');
             return redirect()->route('datasarana');
         } else {
             return redirect()->back()->withErrors(['Gagal menambahkan data sarana.']);

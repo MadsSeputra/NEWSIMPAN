@@ -20,18 +20,14 @@
 <!-- End Page Title -->
 
 <!-- start JS untuk Validasi -->
-@if(Session::has('status'))
-<div class="alert alert-success" role="alert">
-  This is a success alert—check it out!
+@if(Session::has('selesai'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ session('selesai') }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+  </button>
 </div>
-@elseif(Session::has('delete'))
-<div class="alert alert-success" role="alert">
-  Data Berhasil Dihapus
-</div>
-@elseif(Session::has('edit'))
-<div class="alert alert-success" role="alert">
-  Data Berhasil Diedit
-</div>
+
 @endif
 <!-- End JS Validasi  -->
 
@@ -81,12 +77,31 @@
                           <td>{{ $pengembalian->keterangan }}</td>
                           <td>{{ $pengembalian->status }}</td>
                           <td class="d-flex align-items-center mt-4">
-                             <form action="{{ route('batalpeminjaman', $pengembalian->id) }}" method="POST">
+                             <form action="{{ route('selesaipeminjaman', $pengembalian->id) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit" class="btn btn-danger">
-                                 Selesai
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                  Selesai
                                 </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Pengembalian</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <!-- Isi konten modal di sini -->
+                                        Yakin Ingin Menyelesaikan Pengembalian Sarana
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Selesai</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               </form>
                           </td>
                       </tr>
@@ -94,38 +109,6 @@
                   @endforeach       
                 </tbody>
               </table>
-              <!-- Vertically centered modal -->
-              <!-- Tombol untuk membuka modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Buka Modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    
-      <!-- Bagian Header Modal -->
-      <div class="modal-header">
-        <h4 class="modal-title">Judul Modal</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      
-      <!-- Bagian Body Modal -->
-      <div class="modal-body">
-        <p>Isi modal di sini...</p>
-      </div>
-      
-      <!-- Bagian Footer Modal -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-        <button type="button" class="btn btn-primary">Simpan</button>
-      </div>
-      
-    </div>
-  </div>
-</div>
-
             </div>
           </div>
         </div>

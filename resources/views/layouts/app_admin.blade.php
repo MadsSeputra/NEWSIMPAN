@@ -27,6 +27,8 @@
       
         <!-- Template Main CSS File -->
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset('assets/vendor/bootsrap/css/bootstrap.min.css') }}">
       
         <!-- =======================================================
         * Template Name: NiceAdmin
@@ -75,7 +77,7 @@
    
      <!-- Template Main JS File -->
      <script src="{{ asset('assets/js/main.js')}}"></script>
-   
+     <script src="{{ asset('assets/vendor/bootsrap/js/bootstrap.bundle.min.js') }}"></script>
   </body>  
 
 

@@ -64,8 +64,8 @@
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('laporanpeminjaman') }}">
-              <i class="bi bi-circle"></i><span>Lap.Peminjaman</span>
+            <a href="{{ route('laporanpeminjamanbatal') }}">
+              <i class="bi bi-circle"></i><span>Lap.Peminjaman Batal</span>
             </a>
           </li>
           <li>

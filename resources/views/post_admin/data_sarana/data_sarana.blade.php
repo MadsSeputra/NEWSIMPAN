@@ -21,7 +21,7 @@
 <!-- start JS untuk Validasi -->
     @if(Session::has('status'))
     <div class="alert alert-success" role="alert">
-      This is a success alert—check it out!
+      {{ session('tambah') }}
     </div>
     @elseif(Session::has('delete'))
     <div class="alert alert-success" role="alert">
@@ -65,6 +65,7 @@
                     <th>Jumlah Sarana</th>
                     <th>Terpakai</th>
                     <th>Tersedia</th>
+                    <th>Foto</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -79,6 +80,15 @@
                     <td>{{ $item->jumlah_sarana }}</td>
                     <td>{{ $item->jumlah_terpakai }}</td>
                     <td>{{ (int)$item->jumlah_sarana - (int)$item->jumlah_terpakai }}</td>
+                    <td>
+                      @if($item->images->isNotEmpty() && $item->images->first())
+                          <img class="featured-img img-fluid rounded" src="{{ asset('storage/' . $item->images->first()->src) }}" alt="{{ $item->nama_sarana }}" style="width: 100px; height: 100px;">
+                      @else
+                          <img class="featured-img img-fluid rounded" src="{{ asset('assets/img/imagekosong.jpg') }}" alt="{{ $item->nama_sarana }}" style="width: 100px; height: 100px;">
+                      @endif
+                    </td>
+                  
+                                  
                     <td class="d-flex align-items-center">
                       <a href="{{ route('editdatasarana', ['id' => $item->id]) }}" class="btn btn-primary mb-3" style="margin-right: 5px;">
                           <i class="bi bi-pencil-square"></i> Edit

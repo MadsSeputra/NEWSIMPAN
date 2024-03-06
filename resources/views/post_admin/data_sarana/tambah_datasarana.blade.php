@@ -36,9 +36,9 @@
                   <div class="col-12">
                     <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
                     <div class="col-sm-10">
-                      <input class="form-control" type="file" id="formFile">
+                      <input class="form-control" type="file" name="images[]" multiple data-max_length="20">
                     </div>
-                  </div>
+                  </div>             
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary">Submit</button>
                   <button type="reset" class="btn btn-secondary">Reset</button>
