@@ -50,16 +50,31 @@ class TransaksiUser extends Controller
         
         // $peminjamans = Peminjaman::create($request->all());
          // Lakukan validasi form peminjaman
+        // Lakukan validasi form peminjaman
         $request->validate([
             'id_userlog' => 'required',
             'id_dbsarana' => 'required',
             'jumlah' => 'required|numeric|min:1',
             'tanggal_pinjam' => 'required',
             'tanggal_kembali' => 'required',
-            'keterangan' => 'required',
+            'keterangan' => 'required', // Menambahkan aturan validasi untuk keterangan
             'status' => 'required',
-            // Tambahkan aturan validasi lainnya sesuai kebutuhan
+        ], [
+            'required' => 'Kolom :attribute harus diisi.',
+            'numeric' => 'Kolom :attribute harus berupa angka.',
+            'min' => [
+                'numeric' => 'Kolom :attribute harus memiliki nilai minimal :min.',
+            ],
         ]);
+
+        // Periksa jumlah sarana yang tersedia
+        $dbsarana = Dbsarana::find($request->id_dbsarana);
+        $jumlahDipinjam = $request->jumlah;
+        $jumlahTersedia = $dbsarana->jumlah_sarana - $dbsarana->jumlah_terpakai;
+
+        if ($jumlahDipinjam > $jumlahTersedia) {
+            return redirect()->back()->withErrors(['Jumlah sarana yang ingin dipinjam melebihi yang tersedia.']);
+        }
 
         // Proses peminjaman
         $peminjaman = new Peminjaman();
@@ -74,9 +89,8 @@ class TransaksiUser extends Controller
         $peminjaman->save();
 
         // Mengurangi jumlah terpakai pada sarana yang dipinjam
-        $sarana = Dbsarana::find($request->id_dbsarana);
-        $sarana->jumlah_terpakai = (int)$sarana->jumlah_terpakai + (int)$request->jumlah;
-        $sarana->save();
+        $dbsarana->jumlah_terpakai += $jumlahDipinjam;
+        $dbsarana->save();
 
         if ($peminjaman) {
             Session::flash('status', 'success');

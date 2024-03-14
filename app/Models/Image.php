@@ -22,25 +22,30 @@ class Image extends Model
 
     public static function uploadImage($img_response, $rezize = true)
     {
+        // Simpan gambar secara lokal
+        $imagePaths = [];
+
         if ($rezize == true) {
-            $thumbnail = InterventionImg::make($img_response->getPathname())->resize(390, 220, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save(storage_path('app/public/thumbnails/' . $img_response->hashName(), 60));
+            $thumbnailPath = storage_path('app/public/thumbnails/' . $img_response->hashName());
+            $imagePath = storage_path('app/public/images/' . $img_response->hashName());
 
-            $image = InterventionImg::make($img_response->getPathname())->resize(800, 550, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save(storage_path('app/public/images/' . $img_response->hashName(), 90));
+            InterventionImg::make($img_response->getPathname())
+                ->resize(390, 220, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($thumbnailPath, 60);
 
-            return [
-                'thumb' => $thumbnail,
-                'src' => $image
+            InterventionImg::make($img_response->getPathname())
+                ->resize(800, 550, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($imagePath, 90);
+
+            $imagePaths = [
+                'thumb' => $thumbnailPath,
+                'src' => $imagePath
             ];
         }
 
-        return [
-            'thumb' => $img_response->store('images'),
-            'src' => $img_response->store('images')
-        ];
+        return $imagePaths;
     }
 
     public static function getImage()
@@ -87,15 +92,15 @@ class Image extends Model
             // ... code here
         });
 
-        self::deleting(function ($image) {
+        self::deleted(function ($image) {
+            Storage::delete([$image->src, $image->thumb]);
         });
 
-        self::deleted(function ($image) {
-            if (Storage::disk('public')->exists($image->src)) {
-                Storage::delete($image->src);
-            }
-            if (Storage::disk('public')->exists($image->thumb)) {
-                Storage::delete($image->thumb);
+        self::deleting(function ($image) {
+            // Pastikan $image adalah instance dari model Image
+            if ($image instanceof Image) {
+                // Hapus file gambar dari penyimpanan
+                Storage::delete([$image->src, $image->thumb]);
             }
         });
     }

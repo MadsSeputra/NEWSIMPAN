@@ -1,27 +1,22 @@
 @extends('layouts.app_admin')
 @section('action')
-@section('title', 'Dashboard Admin')
-
+@section('title', 'Informasi Sarana User')
 @endsection
+
+
 
 <!-- Start Page Title -->
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Master Data</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">Data Peminjam</li>
-        </ol>
-      </nav>
+      <h1>Informasi Sarana User</h1>
+      <br>
     </div> 
 <!-- End Page Title -->
 
 
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Informasi Saran Upacara</h5>
+            <h5 class="card-title">Informasi Sarana Upacara</h5>
             <p>Menyajikan informasi terkait ketersediaan sarana upacara yang ada di Banjar Mertha Rauh</p>
 
             {{-- Ambil nomor halaman saat ini --}}
@@ -39,6 +34,7 @@
                     <th>Id Sarana</th>
                     <th>Nama Sarana</th>
                     <th>Sarana Tersedia</th>
+                    <th>Foto</th>
                 </tr>
 
               </thead>
@@ -49,6 +45,13 @@
                         <td>Sar-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $item->id }}</td>
                         <td>{{ $item->nama_sarana }}</td>
                         <td>{{ (int)$item->jumlah_sarana - (int)$item->jumlah_terpakai }}</td>
+                        <td>
+                          @if($item->images && $item->images->count())
+                          <img class="featured-img img-fluid rounded" src="{{ asset('storage/' . $item->images->src) }}" alt="{{ $item->nama }}" style="width: 100px; height: 100px;">
+                          @else
+                              <img class="featured-img img-fluid rounded" src="{{ asset('assets/img/imagekosong.jpg') }}" alt="{{ $item->nama }}" style="width: 100px; height: 100px;">
+                          @endif                  
+                      </td>
                     </tr>
                     
                 @endforeach
@@ -61,3 +64,4 @@
 
   </div>
 </div>
+</main>

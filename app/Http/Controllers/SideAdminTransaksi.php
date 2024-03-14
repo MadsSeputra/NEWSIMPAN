@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Mail\SendEmail;
 use App\Models\Dbsarana;
 use App\Models\Peminjaman;
+use App\Mail\SendEmailBatal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -22,12 +24,15 @@ class SideAdminTransaksi extends Controller
         $peminjamanditerima = Peminjaman::with(['userLog', 'dbsarana'])
         ->where('status', 'DITERIMA')
         ->get();
+
+        // Mendapatkan tanggal sekarang
+        $today = Carbon::now();
         // Menghitung nomor urut pada halaman saat ini
         $currentPage = request()->get('page', 1);
         $itemsPerPage = 5;
         $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
      
-        return view('post_admin/transaksi_peminjaman', compact('peminjamans', 'startNumber', 'peminjamanditerima'));
+        return view('post_admin/peminjaman_admin/transaksi_peminjaman', compact('peminjamans', 'startNumber', 'peminjamanditerima', 'today'));
 
         
         
@@ -43,7 +48,7 @@ class SideAdminTransaksi extends Controller
         $itemsPerPage = 5;
         $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
      
-        return view('post_admin/transaksi_pengembalian', compact('pengembalian', 'startNumber'));
+        return view('post_admin/pengembalian_admin/transaksi_pengembalian', compact('pengembalian', 'startNumber'));
     }
 
     public function processKonfirmasiPeminjaman(Request $request, $id)
@@ -75,7 +80,7 @@ class SideAdminTransaksi extends Controller
         return redirect()->route('transaksipeminjaman')->with('konfirmasi', 'Konfirmasi pesanan berhasil');
     }
 
-    public function batalkanPesanan($id)
+    public function batalkanPesanan(Request $request, $id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
         $peminjaman->status = 'DIBATALKAN';
@@ -86,6 +91,13 @@ class SideAdminTransaksi extends Controller
         $sarana->jumlah_terpakai -= $peminjaman->jumlah;
         $sarana->save();
 
+        $data = [
+            'id_peminjam' => $peminjaman->id,
+            'nama' => $peminjaman->userLog->nama,
+        ];
+
+        Mail::to($request->recipient_email) // Menggunakan alamat email penerima dari input form
+            ->send(new SendEmailBatal($data));
         return redirect()->route('transaksipeminjaman')->with('batal', 'Pesanan berhasil dibatalkan.');
     }
     public function selesaikanPesanan($id)

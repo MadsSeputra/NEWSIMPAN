@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 //import model dbsarana
-use App\Models\UserLog;
+use Carbon\Carbon;
 
+use Dompdf\Dompdf;
+use App\Models\Image;
+use App\Models\UserLog;
 use App\Models\Dbsarana;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 
 class MasterDataController extends Controller
@@ -20,7 +25,7 @@ class MasterDataController extends Controller
         //$dbsarana = Dbsarana::latest()->paginate(5);
 
          // Mengambil semua data dari tabel Dbsarana
-        $datasarana = Dbsarana::all();
+         $datasarana = Dbsarana::with('images')->get();
 
         // Mengambil jumlah yang telah dipinjam dari tabel Peminjaman
         $jumlahDipinjam = Peminjaman::count('jumlah');
@@ -57,13 +62,43 @@ class MasterDataController extends Controller
     }
     public function update(Request $request, $id)
     {
-       $datasarana = Dbsarana::findOrfail($id);
-       $datasarana->update($request->all());
-       if ($datasarana) {
-        Session::flash('edit', 'Ubah Data Sarana Berhasil');
+        $datasarana = Dbsarana::findOrFail($id);
+
+        // Perbarui data Dbsarana dengan input yang diterima
+        $datasarana->update($request->all());
+
+        // Cek apakah ada gambar yang diunggah dalam request
+        if ($request->hasFile('image')) {
+            $saranaimage = Dbsarana::findOrFail($id);
+            // Hapus gambar-gambar yang terkait dengan Dbsarana ini
+            if ($datasarana->images instanceof Image) {
+                // Hapus gambar dari penyimpanan
+                Storage::delete($datasarana->images->src);
+                // Hapus record gambar dari database
+                $datasarana->images->delete();
+            }
+        
+
+
+            // Upload dan simpan gambar baru
+            $imagePath = $request->file('image')->store('images', 'public');
+            $image = Image::create([
+                'path' => $imagePath,
+                'src' => $imagePath, // Sesuaikan nilai 'src' sesuai dengan 'path'
+                'thumb' => $imagePath,
+                'alt' => $imagePath,
+                'imageable_id' => $datasarana->id, // Berikan nilai 'imageable_id'
+                'imageable_type' => 'App\Models\Dbsarana', // Sesuaikan dengan tipe model yang berelasi
+            ]);
+            // Asosiasikan gambar dengan entitas menggunakan relasi polimorfik
+            $datasarana->images()->save($image);
         }
-        return redirect()->route('datasarana');
+        // Setelah selesai, redirect ke halaman tampilan data sarana
+        return redirect()->route('datasarana')->with('edit', 'Ubah Data Sarana Berhasil');
     }
+
+
+
 
     public function delete($id)
     {
@@ -89,6 +124,49 @@ class MasterDataController extends Controller
         return view('post_admin.data_terdaftar.data_terdaftar', compact('dataterdaftar'));
         
         return view('post_admin.data_terdaftar.data_terdaftar');
+    }
+
+
+    public function lihatcetakdatasarana()
+    {
+
+        $datasarana = Dbsarana::with('images')->get();
+
+        // Menghitung nomor urut pada halaman saat ini
+        $currentPage = request()->get('page', 1);
+        $itemsPerPage = 5;
+        $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
+
+        return view('post_admin.data_sarana.cetak_datasarana', compact('datasarana', 'startNumber'));
+    }
+
+    public function cetakdatasarana()
+    {
+
+        $datasarana = Dbsarana::with('images')->get();
+
+        // Menghitung nomor urut pada halaman saat ini
+        $currentPage = request()->get('page', 1);
+        $itemsPerPage = 5;
+        $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
+
+        // Render view ke dalam HTML
+        $html = View::make('post_admin..data_sarana.cetak_datasarana', compact('datasarana','startNumber'))->render();
+
+        // Buat instance Dompdf
+        $dompdf = new Dompdf();
+        
+        // Load HTML ke dalam Dompdf
+        $dompdf->loadHtml($html);
+
+        // Atur ukuran dan orientasi halaman
+        $dompdf->setPaper('A4', 'potrait');
+
+        // Render HTML ke dalam PDF
+        $dompdf->render();
+
+        // Kembalikan file PDF sebagai respons
+        return $dompdf->stream('laporan-datasarana.pdf');
     }
 
 }

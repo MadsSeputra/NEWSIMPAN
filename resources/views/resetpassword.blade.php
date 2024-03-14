@@ -53,12 +53,12 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Masuk  ke dalam SIMPANSARANA</h5>
-                    <p class="text-center small">Masukkan email dan password anda</p>
+                    <h5 class="card-title text-center pb-0 fs-4">SIMPANSARANA</h5>
+                    <p class="text-center small">Anda melupkan password, silakan untuk melakukan reset password agar bisa masuk ke akun anda</p>
                   </div>
 
                   <!-- session flass saat halaman error -->
-                  @if (Session::has('status'))
+                  {{-- @if (Session::has('status'))
                   <div class="alert alert-danger" role="alert">
                     {{ Session::get('message') }}
                   </div>
@@ -66,13 +66,12 @@
                   <div class="alert alert-success" role="alert">
                     {{ Session::get('ubahPassword') }}
                   </div>
-                  @endif
+                  @endif --}}
 
 
-                  <form method= "POST" action="login" class="row g-3 needs-validation" novalidate >
+                  <form method= "POST" action="{{ route('processlupaPassword') }}" class="row g-3 needs-validation" novalidate >
 
                     @csrf <!-- khusus digunakan saat memakai form -->
-
                     <div class="col-12">
                       <label for="email" class="form-label">Email</label>
                       <div class="input-group has-validation">
@@ -81,29 +80,11 @@
                         <div class="invalid-feedback">Masukkan username.</div>
                       </div>
                     </div>
-
-                    <div class="col-12">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="password" required>
-                      <div class="invalid-feedback">Masukkan Password!</div>
-                    </div>
-<!--
-                    <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">Remember me</label>
-                      </div>
--->
                     <div class="col-12">
                       <button class="btn btn-primary w-100 form-control" type="submit">
-                          <a href="home" style="color: white;">Login</a>
+                          <a href="home" style="color: white;">Kirim</a>
                       </button>
-                    </div>
-
-                    <div class="col-12 d-flex justify-content-between">
-                      <p class="small mb-0">Belum memiliki akun? <a href="{{ route('register') }}">Buat akun</a></p>
-                      <p class="small mb-0"><a href="{{ route('lupaPassword') }}">Lupa Password?</a></p>
-                  </div>                                   
+                    </div>                              
                   </form>
 
                 </div>

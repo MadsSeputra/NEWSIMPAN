@@ -30,4 +30,10 @@ class Peminjaman extends Model
     {
         return $this->belongsTo(Dbsarana::class, 'id_dbsarana', 'id');
     }
+
+    // Mendefinisikan accessor untuk tanggal_kembali_melewati_batas
+    public function getTanggalKembaliMelewatiBatasAttribute()
+    {
+        return strtotime($this->tanggal_kembali) > strtotime($this->tanggal_pinjam);
+    }
 }

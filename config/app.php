@@ -188,5 +188,16 @@ return [
         // 'PDF' => Barryvdh\DomPDF\Facade::class,
         // 'Image' => Intervention\Image\Facades\Image::class,
     ])->toArray(),
-
+    
+    'users' => [
+        'provider' => 'users', // Nama guard yang terkait dengan provider pengemudi
+        'table' => 'password_resets', // Nama tabel untuk menyimpan reset password
+        'expire' => 60, // Waktu kadaluarsa token reset password dalam menit
+    ],
+    
+    'admin' => [
+        'provider' => 'admins', // Nama guard yang terkait dengan provider admin
+        'table' => 'password_resets', // Nama tabel untuk menyimpan reset password
+        'expire' => 60, // Waktu kadaluarsa token reset password dalam menit
+    ],
 ];

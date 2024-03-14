@@ -34,13 +34,34 @@
                 <div class="col-12">
                     <label for="jumlah_sarana" class="form-label">Jumlah Sarana</label>
                     <input type="number" name="jumlah_sarana" class="form-control" id="jumlah_sarana" value="{{ $datasarana->jumlah_sarana }}">
+                </div>
+                <div class="col-12">
+                  <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+                  <div class="col-sm-10">
+                      <div class="upload__box">
+                          @error('images[]')
+                              <small class="text-xs text-red-500 ml-1">{{ '*' . $message }}</small>
+                          @enderror
+                          <div class="upload__btn-box">
+                              <label class="upload__btn btn btn">
+                                  {{-- <p>Choose An Image</p> --}}
+                                  <input type="file" name="image" accept="image/*" multiple data-max_length="20" class="upload__inputfile">
+                              </label>
+                          </div>
+                          <div class="upload__img-wrap">
+                              @if($datasarana->images)
+                                  @if ($datasarana->images instanceof App\Models\Image)
+                                      <div class='upload__img-box'>
+                                          <div style='background-image: url({{ asset('storage/' . $datasarana->images->src) }})' data-number='{{ $datasarana }}' data-id="{{ $datasarana->images->id }}" data-file='{{ 'storage/' . $datasarana->images->src }}' class='img-bg'>
+                                              <div class='upload__img-close'></div>
+                                          </div>
+                                      </div>
+                                  @endif
+                              @endif
+                          </div>                        
+                      </div>
                   </div>
-                  <div class="col-12">
-                    <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
-                    <div class="col-sm-10">
-                      <input class="form-control" type="file" id="formFile">
-                    </div>
-                  </div>
+                </div>                                  
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary">Submit</button>
                   <button type="reset" class="btn btn-secondary">Reset</button>

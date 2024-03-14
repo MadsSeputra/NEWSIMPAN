@@ -33,7 +33,7 @@
           </li>
           <li>
             <a href="{{ route('dataterdaftar') }}">
-              <i class="bi bi-circle"></i><span>Data terdaftar</span>
+              <i class="bi bi-circle"></i><span>Data Pengguna</span>
             </a>
           </li>
         </ul>
@@ -64,8 +64,8 @@
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('laporanpeminjamanbatal') }}">
-              <i class="bi bi-circle"></i><span>Lap.Peminjaman Batal</span>
+            <a href="{{ route('laporanpeminjaman') }}">
+              <i class="bi bi-circle"></i><span>Lap.Peminjaman</span>
             </a>
           </li>
           <li>
@@ -111,13 +111,15 @@
     </li><!-- End Transaksi admin Nav -->
 
     
-    @endif<li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('logout') }}">
-        <i class="bi bi-box-arrow-in-right"></i>
-        <!-- href-->
-        <span>Log out </span>
-      </a>
-    </li><!-- End Login Page Nav -->
+    @endif
+    <li class="nav-item">
+      <!-- Button trigger modal -->
+      <button type="button" class="nav-link collapsed" data-bs-toggle="modal" data-bs-target="#logoutModal">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>Log out</span>
+      </button>
+    </li>
+    <!-- End Login Page Nav -->
   </ul>
 
   </aside><!-- End Sidebar-->

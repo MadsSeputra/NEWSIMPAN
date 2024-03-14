@@ -18,15 +18,7 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    @if (Session::has('edit'))
-    <div class="alert alert-success" role="alert">
-      {{ Session::get('textedit') }}
-    </div>
-    @elseif (Session::has('ubahPassword'))
-    <div class="alert alert-success" role="alert">
-      {{ Session::get('ubahPassword') }}
-    </div>
-    @endif
+
     <section class="section profile">
       <div class="row">
         <div class="col-xl-4">
@@ -77,7 +69,6 @@
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                   {{-- <h5 class="card-title">About</h5>
                   <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p> --}}
-                  @if (Str::length(Auth::guard('admin')->user()) > 0)
                   <h5 class="card-title">Profile Details</h5>
                   {{-- @elseif (Str::length(Auth::guard('web')->user()) > 0) --}}
                   <div class="row">
@@ -104,7 +95,7 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form >
+                  <form action="{{ route('ubahpasswordadmin') }}" method="post">
                     {{-- <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
@@ -150,85 +141,6 @@
                   </form><!-- End Profile Edit Form -->
 
                 </div>
-                @endif
-
-                @if (Str::length(Auth::guard('web')->user()) > 0)
-                <h5 class="card-title">Profile Details</h5>
-                {{-- @elseif (Str::length(Auth::guard('web')->user()) > 0) --}}
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label ">Nama</div>
-                  <div class="col-lg-9 col-md-8">: {{ Auth::user()->nama}}</div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Email</div>
-                  <div class="col-lg-9 col-md-8">: {{ Auth::user()->email}}</div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Nomor Telphone</div>
-                  <div class="col-lg-9 col-md-8">: {{ Auth::user()->no_telp}}</div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Alamat</div>
-                  <div class="col-lg-9 col-md-8">: {{ Auth::user()->alamat}}</div>
-                </div>
-              </div>
-
-              <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                <!-- Profile Edit Form -->
-                <form action="{{ route('profileuserupdate') }}" method="post">
-                  @csrf
-                  @method('PUT')
-                  {{-- <div class="row mb-3">
-                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                    <div class="col-md-8 col-lg-9">
-                      <img src="assets/img/profile-img.jpg" alt="Profile">
-                      <div class="pt-2">
-                        <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                      </div>
-                    </div>
-                  </div> --}}
-
-                  <div class="row mb-3">
-                    <label for="nama" class="col-md-4 col-lg-3 col-form-label">Nama</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="nama" type="text" class="form-control" id="nama" value="{{ Auth::user()->nama}}">
-                    </div>
-                  </div>
-
-                  <div class="row mb-3">
-                    <label for="no_telp" class="col-md-4 col-lg-3 col-form-label">No Telphone</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="no_telp" type="text" class="form-control" id="no_telp" value="{{ Auth::user()->no_telp}}">
-                    </div>
-                  </div>
-
-                  <div class="row mb-3">
-                    <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="email" type="text" class="form-control" id="email" value="{{ Auth::user()->email}}">
-                    </div>
-                  </div>
-
-                  <div class="row mb-3">
-                    <label for="alamat" class="col-md-4 col-lg-3 col-form-label">Alamat</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input name="alamat" type="text" class="form-control" id="alamat" value="{{ Auth::user()->alamat}}">
-                    </div>
-                  </div>
-
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                  </div>
-                </form><!-- End Profile Edit Form -->
-
-              </div>
-              @endif
-
                 {{-- <div class="tab-pane fade pt-3" id="profile-settings">
 
                   <!-- Settings Form -->
@@ -290,7 +202,7 @@
                   </div>
                   @endif
                   <!-- Change Password Form -->
-                  <form action="{{ route('ubahpassword') }}" method="post">
+                  <form action="{{ route('ubahpasswordadmin') }}" method="post">
                     @csrf
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Password Lama</label>
@@ -330,4 +242,4 @@
     </section>
 
   </main><!-- End #main -->
-  @section('content')
+@section('content')

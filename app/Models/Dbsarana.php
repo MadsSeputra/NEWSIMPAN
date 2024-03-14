@@ -30,7 +30,7 @@ class Dbsarana extends Model
         //relation
         public function images()
         {
-            return $this->morphMany(Image::class, 'imageable');
+            return $this->morphOne(Image::class, 'imageable');
         }
             // boot
         public static function boot()
@@ -41,57 +41,63 @@ class Dbsarana extends Model
                 $dbsarana->id = request()->id;
             });
        
-               self::created(function ($dbsarana) {
-                   foreach (request()->file('images') ?? [] as $key => $image) {
-                       $uploaded = Image::uploadImage($image);
-                       Image::create([
-                           'thumb' => 'thumbnails/' . $uploaded['thumb']->basename,
-                           'src' => 'images/' . $uploaded['src']->basename,
-                           'alt' => Image::getAlt($image),
-                           'imageable_id' => $dbsarana->id,
-                           'imageable_type' => "App\Models\Dbsarana"
-                       ]);
-                   }
+            self::created(function ($dbsarana) {
+                foreach (request()->file('images') ?? [] as $key => $image) {
+                    $uploaded = Image::uploadImage($image);
+                    Image::create([
+                        'thumb' => 'thumbnails/' . basename($uploaded['thumb']),
+                        'src' => 'images/' . basename($uploaded['src']),
+                        'alt' => Image::getAlt($image),
+                        'imageable_id' => $dbsarana->id,
+                        'imageable_type' => "App\Models\Dbsarana"
+                    ]);
+                }
+            });
+            
+            self::updating(function ($dbsarana) {
+                $img_array = explode(',', request()->deleted_images);
+                array_pop($img_array);
+            
+                // Hapus gambar yang dihapus dari penyimpanan lokal
+                foreach ($img_array as $key => $image_id) {
+                    $will_deleted_image = Image::find($image_id);
+                    if (!is_null($will_deleted_image)) {
+                        Storage::delete([$will_deleted_image->src, $will_deleted_image->thumb]);
+                        $will_deleted_image->delete();
+                    }
+                }
+            
+                // Unggah dan simpan gambar baru secara lokal
+                foreach (request()->file('images') ?? [] as $key => $image) {
+                    $uploaded = Image::uploadImage($image);
+                    Image::create([
+                        'thumb' => 'thumbnails/' . basename($uploaded['thumb']),
+                        'src' => 'images/' . basename($uploaded['src']),
+                        'alt' => Image::getAlt($image),
+                        'imageable_id' => $dbsarana->id,
+                        'imageable_type' => "App\Models\Dbsarana"
+                    ]);
+                }
+            });
+            
+       
+               self::updated(function ($image) {
+                    if (!is_null($image->src)) {
+                    Storage::delete($image->src);
+                }
+                if (!is_null($image->thumb)) {
+                    Storage::delete($image->thumb);
+                }
                });
        
-               self::updating(function ($dbsarana) {
-       
-                   $img_array = explode(',', request()->deleted_images);
-                   array_pop($img_array);
-       
-                   // dd($img_array);
-                   // dd(Image::whereIn('id', $img_array)->get());
-                   foreach ($img_array as $key => $image_id) {
-                       $will_deleted_image = Image::find($image_id);
-                       if (!is_null($will_deleted_image)) {
-                           $will_deleted_image->delete();
-                       }
-                   }
-       
-                   foreach (request()->file('images') ?? [] as $key => $image) {
-                       $uploaded = Image::uploadImage($image);
-                       Image::create([
-                           'thumb' => 'thumbnails/' . $uploaded['thumb']->basename,
-                           'src' => 'images/' . $uploaded['src']->basename,
-                           'alt' => Image::getAlt($image),
-                           'imageable_id' => $dbsarana->id,
-                           'imageable_type' => "App\Models\Dbsarana"
-                       ]);
-                   }
-               });
-       
-               self::updated(function ($model) {
-                   // ... code here
-               });
-       
-               self::deleting(function ($dbsarana) {
-                   foreach ($dbsarana->images as $key => $image) {
-                       $image->delete();
-                   }
-               });
-       
-               self::deleted(function ($dbsarana) {
-               });
-           }
+               static::deleting(function ($dbsarana) {
+                $dbsarana->images()->delete();
+            });
+
+            self::deleted(function ($dbsarana) {
+            });
+        }
+
+           
 
 }
