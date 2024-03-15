@@ -73,8 +73,7 @@
       
         <div class="garis"></div>
         <div class="text-center mb-3">
-            <h2>SIM PINJAM SARANA</h2>
-            <h3>Data Pengembalian</h3>
+            <h4>Laporan Data Pengembalian</h4>
         </div>
         <table>
             <thead>

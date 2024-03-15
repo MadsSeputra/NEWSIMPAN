@@ -194,7 +194,7 @@
                                                         </span>
                                                     </td>
                                                     <td>{{ $peminjamanditerima->keterangan }}</td>
-                                                    <td><span class="badge bg-warning">{{ $peminjamanditerima->status }}</span></td>
+                                                    <td><span class="badge bg-success">{{ $peminjamanditerima->status }}</span></td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

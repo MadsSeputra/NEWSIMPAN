@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Dbsarana;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use App\Mail\PeminjamanNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class TransaksiUser extends Controller
@@ -92,6 +94,8 @@ class TransaksiUser extends Controller
         $dbsarana->jumlah_terpakai += $jumlahDipinjam;
         $dbsarana->save();
 
+        $adminEmail = 'simpansarmr@gmail.com'; // Ganti dengan alamat email admin Anda
+        Mail::to($adminEmail)->send(new PeminjamanNotification());
         if ($peminjaman) {
             Session::flash('status', 'success');
             Session::flash('message', 'Tambah Data Sarana Berhasil');
@@ -100,30 +104,5 @@ class TransaksiUser extends Controller
             return redirect()->back()->withErrors(['Gagal menambahkan data sarana.']);
         }
     }
-
-        // Validasi input
-    //     $request->validate([
-    //         'no_telp' => 'required',
-    //         'id_dbsarana' => 'required',
-    //         'jumlah_sarana' => 'required',
-    //         'tanggal_pinjam' => 'required',
-    //         'tanggal_kembali' => 'required',
-    //         'keterangan' => 'required',
-    //     ]);
-
-    //     Peminjaman::create([
-    //         'id_transaksi' => $request->id_transaksi,
-    //         'id_userlog' => Auth::id(),
-    //         'no_telp' => $request->no_telp,
-    //         'id_dbsarana' => $request->id_dbsarana,
-    //         'jumlah_sarana' => $request->jumlah_sarana,
-    //         'tanggal_pinjam' => $request->tanggal_pinjam,
-    //         'tanggal_kembali' => $request->tanggal_kembali,
-    //         'keterangan' => $request->keterangan,
-    //         'status' => 'Belum Terkonfirmasi',
-    //     ]);
-
-    //     return redirect()->route('transaksiuser')->with('status', 'Pengajuan berhasil diajukan');
-    // }
     
 }

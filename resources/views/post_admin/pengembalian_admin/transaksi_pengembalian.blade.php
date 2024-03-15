@@ -62,7 +62,7 @@
                                                     <td>{{ $pengembalian->tanggal_pinjam }}</td>
                                                     <td>{{ $pengembalian->tanggal_kembali }}</td>
                                                     <td>{{ $pengembalian->keterangan }}</td>
-                                                    <td>{{ $pengembalian->status }}</td>
+                                                    <td><span class="badge bg-success">{{ $pengembalian->status }}</span></td>
                                                     <td class="d-flex align-items-center mt-4">
                                                         <form action="{{ route('selesaipeminjaman', $pengembalian->id) }}" method="POST">
                                                             @csrf

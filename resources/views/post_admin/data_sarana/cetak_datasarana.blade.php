@@ -73,8 +73,7 @@
       
         <div class="garis"></div>
         <div class="text-center mb-3">
-            <h2>SIM PINJAM SARANA</h2>
-            <h3>Data Sarana</h3>
+            <h4>Laporan Data Sarana</h4>
         </div>
         <table>
             <thead>
