@@ -100,6 +100,7 @@ Route::middleware('auth:admin')->group(function () {
     //Route untuk profil user
     Route:: get('/profiladmin', [DashboardController::class, 'profiladmin'])->name('profiladmin');
     Route::post('/ubah-password-admin', [AuthController::class, 'ubahpassword'])->name('ubahpasswordadmin');
+    Route::put('/profile-update-admin', [DashboardController::class, 'profileadminupdate'])->name('profileadminupdate');
 });
 
 Route::middleware('auth:web')->group(function () {

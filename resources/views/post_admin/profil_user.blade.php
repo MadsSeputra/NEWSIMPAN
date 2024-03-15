@@ -9,14 +9,8 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Profile</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Profile</li>
-        </ol>
-      </nav>
+      <h1>Profil</h1>
+      <br>
     </div><!-- End Page Title -->
     @if (Session::has('edit'))
     <div class="alert alert-success" role="alert">
@@ -182,17 +176,6 @@
                 <form action="{{ route('profileuserupdate') }}" method="post">
                   @csrf
                   @method('PUT')
-                  {{-- <div class="row mb-3">
-                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                    <div class="col-md-8 col-lg-9">
-                      <img src="assets/img/profile-img.jpg" alt="Profile">
-                      <div class="pt-2">
-                        <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                        <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                      </div>
-                    </div>
-                  </div> --}}
-
                   <div class="row mb-3">
                     <label for="nama" class="col-md-4 col-lg-3 col-form-label">Nama</label>
                     <div class="col-md-8 col-lg-9">

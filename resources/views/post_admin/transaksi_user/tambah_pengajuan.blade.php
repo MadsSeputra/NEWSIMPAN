@@ -54,34 +54,6 @@
                               <input type="number" name="jumlah" class="form-control" id="jumlah">
                           </div>
 
-                            {{-- <script>
-                              // Menggunakan JavaScript untuk mengatur jumlah_sarana berdasarkan pilihan sarana
-                              document.getElementById('id_dbsarana').addEventListener('change', function() {
-                                  var selectedOption = this.options[this.selectedIndex];
-                                  var maxJumlah = parseInt(selectedOption.getAttribute('data-jumlah'));
-                                  
-                                  // Reset nilai jika melebihi jumlah yang tersedia
-                                  var jumlahSaranaInput = document.getElementById('jumlah');
-                                  if (parseInt(jumlahSaranaInput.value) > maxJumlah) {
-                                      jumlahSaranaInput.value = '';
-                                  }
-                                  jumlahSaranaInput.max = maxJumlah;
-                                  jumlahSaranaInput.readOnly = false;
-                              });
-                          
-                              // Validasi jumlah sarana saat form disubmit
-                              document.querySelector('form').addEventListener('submit', function(event) {
-                                  var selectedOption = document.getElementById('id_dbsarana').options[document.getElementById('id_dbsarana').selectedIndex];
-                                  var maxJumlah = parseInt(selectedOption.getAttribute('data-jumlah'));
-                                  var jumlahSaranaInput = document.getElementById('jumlah');
-                          
-                                  if (parseInt(jumlahSaranaInput.value) > maxJumlah) {
-                                      alert('Jumlah sarana melebihi yang tersedia!');
-                                      event.preventDefault(); // Mencegah pengajuan formulir
-                                  }
-                              });
-                          </script> --}}
-
                             <!-- Tanggal Pinjam -->
                             <div class="form-group">
                                 <label for="tanggal_pinjam">Tanggal Pinjam</label>
@@ -104,6 +76,11 @@
                                 <label for="status">Status</label>
                                 <input type="text" name="status" class="form-control" value="DALAM-PROSES" readonly>
                             </div>
+
+                            <div class="form-group d-none">
+                              <label for="nama_peminjam">Nama Peminjam</label>
+                              <input type="text" name="nama_peminjam" id="nama_peminjam" class="form-control" value="{{ Auth::user()->nama }}" readonly>
+                          </div>                          
 
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary">Submit</button>

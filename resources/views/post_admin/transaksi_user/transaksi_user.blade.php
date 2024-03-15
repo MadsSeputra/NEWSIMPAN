@@ -20,7 +20,7 @@
 
                 @if(Session::has('status'))
                 <div class="alert alert-success" role="alert">
-                    This is a success alert—check it out!
+                    {{ Session::get('message') }}
                 </div>
                 @elseif(Session::has('delete'))
                 <div class="alert alert-success" role="alert">
@@ -67,7 +67,7 @@
                                         <td>{{ $peminjaman->keterangan }}</td>
                                         <td>
                                             @if($peminjaman->status == 'DITERIMA')
-                                            <span class="badge bg-warning">{{ $peminjaman->status }}</span>
+                                            <span class="badge bg-success">{{ $peminjaman->status }}</span>
                                             @elseif($peminjaman->status == 'DIBATALKAN')
                                             <span class="badge bg-danger">{{ $peminjaman->status }}</span>
                                             @elseif($peminjaman->status == 'DALAM-PROSES')

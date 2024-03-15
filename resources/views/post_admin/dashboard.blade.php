@@ -111,7 +111,7 @@
                                                       <td>{{ $peminjaman->tanggal_pinjam }}</td>
                                                       <td>{{ $peminjaman->tanggal_kembali }}</td>
                                                       <td>{{ $peminjaman->keterangan }}</td>
-                                                      <td>{{ $peminjaman->status }}</td>
+                                                      <td><span class="badge bg-warning ">{{ $peminjaman->status }}</span></td>
                                                   </tr>
                                                   @endforeach
                                               </tbody>
@@ -155,7 +155,7 @@
                                                       <td>{{ $peminjamanditerima->tanggal_pinjam }}</td>
                                                       <td>{{ $peminjamanditerima->tanggal_kembali }}</td>
                                                       <td>{{ $peminjamanditerima->keterangan }}</td>
-                                                      <td>{{ $peminjamanditerima->status }}</td>
+                                                      <td><span class="badge bg-success">{{ $peminjamanditerima->status }}</span></td>
                                                   </tr>
                                                   @endforeach
                                               </tbody>

@@ -6,6 +6,8 @@ use App\Models\AdminLog;
 use App\Models\Dbsarana;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -42,5 +44,16 @@ class DashboardController extends Controller
         $profiladmin = AdminLog::all();
         return view('post_admin.profil_admin', compact('profiladmin'));
        
+    }
+
+    public function profileadminupdate(Request $request)
+    {
+        $user = AdminLog::find(Auth::id());
+        $user->update($request->all());
+        if ($user) {
+            Session::flash('edit', 'success');
+            Session::flash('textedit', 'Ubah Data Profil Berhasil');
+        }
+        return redirect()->route('profiladmin');
     }
 }
