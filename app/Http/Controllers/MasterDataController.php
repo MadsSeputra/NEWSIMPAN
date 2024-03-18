@@ -44,6 +44,21 @@ class MasterDataController extends Controller
     }
     public function store(Request $request)
     {      
+
+        // Menambahkan aturan validasi untuk keterangan
+            $request->validate([
+                'nama_sarana' => 'required',
+                'jumlah_sarana' => 'required|numeric|min:1',
+                'foto' => 'required',
+            ], [
+                'required' => 'Kolom :attribute harus diisi.',
+                'numeric' => 'Kolom :attribute harus berupa angka.',
+                'min' => [
+                    'numeric' => 'Kolom :attribute harus memiliki nilai minimal :min.',
+                ],
+            ]);
+
+
         //input ke database
         $datasarana = Dbsarana::create($request->all());
         if ($datasarana) {

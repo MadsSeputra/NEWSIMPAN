@@ -98,14 +98,14 @@
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('informasisaranauser') }}">
-        </i><span>Informasi Sarana User</span>
+        </i><span>Informasi Sarana</span>
       </a>
       
     </li><!-- End masterdataNav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('transaksiuser') }}">
-        </i><span>Transaksi User</span>
+        </i><span>Transaksi Pengguna</span>
       </a>
       
     </li><!-- End Transaksi admin Nav -->

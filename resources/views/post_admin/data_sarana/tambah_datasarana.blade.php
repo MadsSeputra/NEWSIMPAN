@@ -16,6 +16,17 @@
         <div class="card">
             <div class="card-body">
               <h5 class="card-title">Tambah Data</h5>
+
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+              @endif
+
               <!-- Vertical Form -->
               <form class="row g-3" action="{{ route('insert-datasarana') }}" method="POST" enctype="multipart/form-data">
                 @csrf

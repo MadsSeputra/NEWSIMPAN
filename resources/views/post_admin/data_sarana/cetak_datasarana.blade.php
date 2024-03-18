@@ -15,21 +15,19 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center; /* Tengahkan teks */
-        }
-        .print-button {
-            display: block; /* Atur agar tombol cetak muncul sebagai blok */
-            margin: 20px auto; /* Atur jarak margin di atas dan bawah serta tengahkan */
+            position: relative; /* Pastikan posisi relatif untuk elemen di dalamnya */
         }
         .container {
             max-width: 960px;
             margin: 0 auto; /* Mengatur margin secara otomatis untuk memposisikan elemen di tengah */
             padding: 20px;
+            position: relative; /* Posisi relatif untuk mengakomodasi posisi absolut tanda tangan */
         }
         table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-left: auto; /* Mengatur margin kiri menjadi otomatis */
-        margin-right: auto; /* Mengatur margin kanan menjadi otomatis */
+            width: 100%;
+            border-collapse: collapse;
+            margin-left: auto; /* Mengatur margin kiri menjadi otomatis */
+            margin-right: auto; /* Mengatur margin kanan menjadi otomatis */
         }
 
         th, td {
@@ -55,21 +53,35 @@
             border: 1px solid #000;
             margin-bottom: 20px;
         }
+        .signature {
+            text-align: right;
+            margin-top: 50px;
+            font-size: 15px;
+        }
+        .signature p {
+            margin: 0; /* Menghapus margin di antara paragraf */
+        }
+
+        .signature-position {
+            margin: 0;
+            font-size: 15px;
+        
+        }
+
+        .signature-name {
+            
+            margin-top: 100px;
+            font-size: 16px;
+        
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        {{-- @php
-            $downloaded = isset($_GET['download']); // Periksa apakah data sudah diunduh
-        @endphp
-        @unless($downloaded) <!-- Tampilkan tombol cetak jika data belum diunduh -->
-        <a href="" style="position: absolute; top: 20px; right: 20px;" id="printButton"><button class="btn btn-primary" type="button" onclick="printPage()"><i class="fas fa-print"></i> Cetak</button></a>
-        @endunless --}}
-        
-            <h1 style="font-size: 12pt;">DESA ADAT PAGAN</h1>
-            <h2 style="font-size: 16pt;">BANJAR ADAT MERTA RAUH</h2>
-            <h3 style="font-size: 12pt;">KECAMATAN DENPASAR UTARA KOTA DENPASAR</h3>
-            <h4 style="font-size: 12pt;">JALAN TRIJATA II DENPASAR</h4>
+        <h1 style="font-size: 12pt;">DESA ADAT PAGAN</h1>
+        <h2 style="font-size: 16pt;">BANJAR ADAT MERTA RAUH</h2>
+        <h3 style="font-size: 12pt;">KECAMATAN DENPASAR UTARA KOTA DENPASAR</h3>
+        <h4 style="font-size: 12pt;">JALAN TRIJATA II DENPASAR</h4>
       
         <div class="garis"></div>
         <div class="text-center mb-3">
@@ -104,13 +116,21 @@
                     </td>
                 </tr>
                 @endforeach
+
             </tbody>
         </table>
+
+        <!-- Kolom tanda tangan -->
+        <div class="signature">
+            <p>Denpasar, <span id="currentDate"></span></p>
+            <p class="signature-position">Kelian Banjar,</p>
+            <p class="signature-name">I Ketut Sumerta</p>
+        </div>
     </div>
     <script>
-        window.onload = function() {
-            window.print(); // Memanggil fungsi cetak saat halaman dimuat
-        };
-    </script>    
+        var today = new Date();
+        var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+        document.getElementById('currentDate').innerHTML = date;
+    </script>
 </body>
 </html>

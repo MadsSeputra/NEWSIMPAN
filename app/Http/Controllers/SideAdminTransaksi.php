@@ -27,6 +27,7 @@ class SideAdminTransaksi extends Controller
 
         // Mendapatkan tanggal sekarang
         $today = Carbon::now();
+
         // Menghitung nomor urut pada halaman saat ini
         $currentPage = request()->get('page', 1);
         $itemsPerPage = 5;
@@ -43,12 +44,16 @@ class SideAdminTransaksi extends Controller
         $pengembalian = Peminjaman::with(['userLog', 'dbsarana'])
         ->where('status', 'DITERIMA')
         ->get();
+
+        // Mendapatkan tanggal sekarang
+        $today = Carbon::now();
+
         // Menghitung nomor urut pada halaman saat ini
         $currentPage = request()->get('page', 1);
         $itemsPerPage = 5;
         $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
      
-        return view('post_admin/pengembalian_admin/transaksi_pengembalian', compact('pengembalian', 'startNumber'));
+        return view('post_admin/pengembalian_admin/transaksi_pengembalian', compact('pengembalian', 'startNumber', 'today'));
     }
 
     public function processKonfirmasiPeminjaman(Request $request, $id)
@@ -100,6 +105,8 @@ class SideAdminTransaksi extends Controller
             ->send(new SendEmailBatal($data));
         return redirect()->route('transaksipeminjaman')->with('batal', 'Pesanan berhasil dibatalkan.');
     }
+
+
     public function selesaikanPesanan($id)
     {
         $peminjaman = Peminjaman::findOrFail($id);

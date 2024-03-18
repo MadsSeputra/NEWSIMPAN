@@ -60,7 +60,12 @@
                                                     <td>{{ $pengembalian->dbsarana->nama_sarana }}</td>
                                                     <td>{{ $pengembalian->jumlah }}</td>
                                                     <td>{{ $pengembalian->tanggal_pinjam }}</td>
-                                                    <td>{{ $pengembalian->tanggal_kembali }}</td>
+                                                    <td>
+                                                        <span class="{{ $today > $pengembalian->tanggal_kembali ? 'text-danger' : '' }}">
+                                                            {{ $pengembalian->tanggal_kembali }}
+                                                        </span>
+                                                    </td>
+                                                    {{-- <td>{{ $pengembalian->tanggal_kembali }}</td> --}}
                                                     <td>{{ $pengembalian->keterangan }}</td>
                                                     <td><span class="badge bg-success">{{ $pengembalian->status }}</span></td>
                                                     <td class="d-flex align-items-center mt-4">

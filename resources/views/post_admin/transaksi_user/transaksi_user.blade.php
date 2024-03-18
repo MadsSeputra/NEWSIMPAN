@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="pagetitle">
-                    <h1>Transaksi User</h1>
+                    <h1>Transaksi Pengguna</h1>
                     <br>
                 </div>
                 <!-- End Page Title -->

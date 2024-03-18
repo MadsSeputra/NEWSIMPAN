@@ -81,7 +81,7 @@ class TransaksiUser extends Controller
         // Mengurangi jumlah terpakai pada sarana yang dipinjam
         $dbsarana->jumlah_terpakai += $jumlahDipinjam;
         $dbsarana->save();
-        // Kirim email notifikasi dengan menyertakan nama pengguna
+               // Kirim email notifikasi dengan menyertakan nama pengguna
         $adminEmail = 'simpansarmr@gmail.com'; // Ganti dengan alamat email admin Anda
         Mail::to($adminEmail)->send(new PeminjamanNotification($request->nama_peminjam)); // Menyertakan nama pengguna dalam konstruktor
         if ($peminjaman) {
