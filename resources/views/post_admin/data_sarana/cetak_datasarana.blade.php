@@ -54,26 +54,26 @@
             margin-bottom: 20px;
         }
         .signature {
-            text-align: right;
-            margin-top: 50px;
-            font-size: 15px;
+            text-align: right; /* Untuk membuat teks di kanan */
+            height: 100%; /* Memberi tinggi agar flexbox berfungsi dengan baik */
+            display: flex; /* Menggunakan flexbox */
+            justify-content: flex-end; /* Mengatur konten agar berada di ujung kanan */
+            align-items: center; /* Mengatur penempatan vertikal ke tengah */
         }
+
+        .align-middle {
+            display: flex; /* Menggunakan flexbox */
+            flex-direction: column; /* Menjadikan elemen anak menjadi kolom */
+        }
+
         .signature p {
-            margin: 0; /* Menghapus margin di antara paragraf */
+            margin: 0; /* Menghapus margin agar teks tidak memiliki ruang tambahan */
         }
 
-        .signature-position {
-            margin: 0;
-            font-size: 15px;
-        
+        .align-middle > div {
+            text-align: center; /* Mengatur teks di tengah secara horizontal */
         }
 
-        .signature-name {
-            
-            margin-top: 100px;
-            font-size: 16px;
-        
-        }
     </style>
 </head>
 <body>
@@ -95,6 +95,7 @@
                     <th scope="col">Nama Sarana</th>
                     <th scope="col">Jumlah Sarana</th>
                     <th scope="col">Foto</th>
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -114,6 +115,7 @@
                             <img class="featured-img img-fluid rounded" src="{{ asset('assets/img/imagekosong.jpg') }}" alt="{{ $data->nama }}" style="width: 100px; height: 100px;">
                         @endif                  
                     </td>
+                    <td>{{ $data->status }}</td>
                 </tr>
                 @endforeach
 
@@ -122,9 +124,24 @@
 
         <!-- Kolom tanda tangan -->
         <div class="signature">
-            <p>Denpasar, <span id="currentDate"></span></p>
-            <p class="signature-position">Kelian Banjar,</p>
-            <p class="signature-name">I Ketut Sumerta</p>
+            <div class="align-middle">
+                <div>
+                    <br>
+                    <br>
+                    <br>
+                    <p>Denpasar, <span id="currentDate"></span></p>
+                </div>
+                <div>
+                    <p class="signature-position">Kelian Banjar,</p>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div>
+                    <p class="signature-position">I Ketut Sumerta</p>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -132,5 +149,10 @@
         var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
         document.getElementById('currentDate').innerHTML = date;
     </script>
+    <script>
+        window.onload = function() {
+            window.print(); // Memanggil fungsi cetak saat halaman dimuat
+        };
+    </script>    
 </body>
 </html>

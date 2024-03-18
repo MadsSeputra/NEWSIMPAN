@@ -35,6 +35,7 @@
             <p>Yth,
             <br>{{ $nama }},</p>
             <p>Kami dari SIM Pinjam Sarana memberitahukan bahwa pinjaman Anda dengan nomor pesanan TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $id_peminjam }} dibatalkan.</p>
+            <p>Alasan Pembatalan: {{ $alasan }}</p>
             <p>Terima kasih telah menggunakan layanan kami. Kami harap dapat memudahkan anda dalam peminjaman sarana</p>
             <p>Jangan ragu untuk menghubungi kami jika Anda memiliki pertanyaan atau membutuhkan bantuan lebih lanjut.</p>
         </div>

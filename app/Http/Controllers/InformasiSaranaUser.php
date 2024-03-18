@@ -10,8 +10,8 @@ class InformasiSaranaUser extends Controller
 {
     public function informasisaranauser()
     {
-        $tampildatasarana = Dbsarana::all();
+        $tampildatasarana = Dbsarana::where('status', 'AKTIF')->get();
         return view('post_admin.informasi_sarana_user', compact('tampildatasarana'));
 
-}
+    }
 }

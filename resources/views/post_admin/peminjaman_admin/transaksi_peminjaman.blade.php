@@ -129,16 +129,21 @@
                                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <!-- Isi konten modal di sini -->
-                                                                            Yakin Ingin Membatalkan Pinjaman ID: TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $peminjaman->id }}
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                             <form action="{{ route('batalpeminjaman', $peminjaman->id) }}" method="POST">
                                                                                 @csrf
+                                                                                @method('PATCH')
+                                                                                <input type="hidden" name="recipient_email" value="{{ $peminjaman->userLog->email }}">
+                                                                                <div class="mb-3">
+                                                                                    <label for="alasan" class="form-label">Alasan Pembatalan</label>
+                                                                                    <textarea class="form-control" id="alasan" name="alasan" rows="3" required></textarea>
+                                                                                </div>
+                                                                                Yakin Ingin Membatalkan Pinjaman ID: TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $peminjaman->id }}
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                                 <button type="submit" class="btn btn-danger">Batalkan</button>
-                                                                            </form>
-                                                                        </div>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>

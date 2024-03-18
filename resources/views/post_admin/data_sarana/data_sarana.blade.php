@@ -54,6 +54,7 @@
                                         <th>Terpakai</th>
                                         <th>Tersedia</th>
                                         <th>Foto</th>
+                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -76,6 +77,14 @@
                                             <img class="featured-img img-fluid rounded" src="{{ asset('assets/img/imagekosong.jpg') }}" alt="{{ $item->nama }}" style="width: 100px; height: 100px;">
                                             @endif
                                         </td>
+                                        <td>
+                                            @if($item->status == 'AKTIF')
+                                                <span class="badge bg-success">{{ $item->status }}</span>
+                                            @elseif($item->status == 'NON-AKTIF')
+                                                <span class="badge bg-danger">{{ $item->status }}</span>
+                                            @endif
+                                        </td>
+                                        
                                         <td class="d-flex align-items-center">
                                             <a href="{{ route('editdatasarana', ['id' => $item->id]) }}" class="btn btn-primary mb-3" style="margin-right: 5px;">
                                                 <i class="bi bi-pencil-square"></i> Edit

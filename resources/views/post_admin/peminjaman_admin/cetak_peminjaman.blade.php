@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Data Peminjaman Dibatalkan</title>
+    <title>Cetak Data Peminjaman</title>
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Tambahkan link untuk Font Awesome -->
@@ -55,11 +55,31 @@
             border: 1px solid #000;
             margin-bottom: 20px;
         }
+        .signature {
+            text-align: right; /* Untuk membuat teks di kanan */
+            height: 100%; /* Memberi tinggi agar flexbox berfungsi dengan baik */
+            display: flex; /* Menggunakan flexbox */
+            justify-content: flex-end; /* Mengatur konten agar berada di ujung kanan */
+            align-items: center; /* Mengatur penempatan vertikal ke tengah */
+        }
+
+        .align-middle {
+            display: flex; /* Menggunakan flexbox */
+            flex-direction: column; /* Menjadikan elemen anak menjadi kolom */
+        }
+
+        .signature p {
+            margin: 0; /* Menghapus margin agar teks tidak memiliki ruang tambahan */
+        }
+
+        .align-middle > div {
+            text-align: center; /* Mengatur teks di tengah secara horizontal */
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        @php
+        {{-- @php
             $downloaded = isset($_GET['download']); // Periksa apakah data sudah diunduh
         @endphp
         @unless($downloaded) <!-- Tampilkan tombol cetak jika data belum diunduh -->
@@ -67,7 +87,7 @@
             <button class="btn btn-primary" type="button"><i class="fas fa-print"></i> Cetak</button>
         </a>
         
-        @endunless
+        @endunless --}}
         
             <h1 style="font-size: 12pt;">DESA ADAT PAGAN</h1>
             <h2 style="font-size: 16pt;">BANJAR ADAT MERTA RAUH</h2>
@@ -111,6 +131,36 @@
                 @endforeach
             </tbody>
         </table>
+         <!-- Kolom tanda tangan -->
+         <div class="signature">
+            <div class="align-middle">
+                <div>
+                    <br>
+                    <br>
+                    <br>
+                    <p>Denpasar, <span id="currentDate"></span></p>
+                </div>
+                <div>
+                    <p class="signature-position">Kelian Banjar,</p>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div>
+                    <p class="signature-position">I Ketut Sumerta</p>
+                </div>
+            </div>
+        </div>
     </div>
+    <script>
+        var today = new Date();
+        var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+        document.getElementById('currentDate').innerHTML = date;
+    </script><script>
+        window.onload = function() {
+            window.print(); // Memanggil fungsi cetak saat halaman dimuat
+        };
+    </script>  
 </body>
 </html>

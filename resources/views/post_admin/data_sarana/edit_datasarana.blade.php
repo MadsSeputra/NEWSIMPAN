@@ -29,6 +29,17 @@
                     <label for="jumlah_sarana" class="form-label">Jumlah Sarana</label>
                     <input type="number" name="jumlah_sarana" class="form-control" id="jumlah_sarana" value="{{ $datasarana->jumlah_sarana }}">
                 </div>
+                 <!-- Sarana (pilihan dengan dropdown select) -->
+                 <div class="form-group">
+                  <label for="status">Status</label>
+                  <select class="form-select" name="status" id="status" >
+                      <option value="" selected disabled>Ubah Status</option>
+                      <!-- Tambahkan opsi untuk Aktif -->
+                      <option value="AKTIF">AKTIF</option>
+                      <!-- Tambahkan opsi untuk Non Aktif -->
+                      <option value="NON-AKTIF">NON-AKTIF</option>
+                  </select>
+                </div>
                 <div class="col-12">
                   <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
                   <div class="col-sm-10">

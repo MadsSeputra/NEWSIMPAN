@@ -99,6 +99,7 @@ class SideAdminTransaksi extends Controller
         $data = [
             'id_peminjam' => $peminjaman->id,
             'nama' => $peminjaman->userLog->nama,
+            'alasan' => $request->alasan, // Terima alasan pembatalan dari form
         ];
 
         Mail::to($request->recipient_email) // Menggunakan alamat email penerima dari input form

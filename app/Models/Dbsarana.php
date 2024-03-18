@@ -19,7 +19,8 @@ class Dbsarana extends Model
     protected $fillable =[
         'nama_sarana',
         'jumlah_sarana',
-        'jumlah_terpakai'
+        'jumlah_terpakai',
+        'status',
     ];
 
     //mendefinisikan one to many | karena satu saranan dapat dimiliki oleh banyak pengguna

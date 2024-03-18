@@ -16,6 +16,7 @@ class SendEmailBatal extends Mailable
     // Properti untuk menyimpan data yang akan digunakan dalam view email
     public $id_peminjam;
     public $nama;
+    public $alasan;
 
     /**
      * Create a new message instance.
@@ -25,6 +26,7 @@ class SendEmailBatal extends Mailable
         // Assign data ke dalam properti
         $this->id_peminjam = $data['id_peminjam'];
         $this->nama = $data['nama'];
+        $this->alasan = $data['alasan']; // Masukkan alasan ke dalam properti
     }
  
     /**
