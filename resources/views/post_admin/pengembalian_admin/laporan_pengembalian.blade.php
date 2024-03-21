@@ -63,7 +63,7 @@
                           <input type="text" name="tahun" id="tahun" required pattern="[0-9]{4}" placeholder="(contoh: 2022)" class="form-control">
                       </div>
                       <div class="col-md-2 col-sm-12 mt-4">
-                          <button class="btn btn-primary mt-md-2" type="submit">Cetak Data</button>
+                          <button class="btn btn-primary mt-md-2" type="submit">Cetak</button>
                       </div>
                   </div>
                 </form>

@@ -157,7 +157,8 @@
         var today = new Date();
         var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
         document.getElementById('currentDate').innerHTML = date;
-    </script><script>
+    </script>
+    <script>
         window.onload = function() {
             window.print(); // Memanggil fungsi cetak saat halaman dimuat
         };
