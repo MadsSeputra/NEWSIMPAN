@@ -10,7 +10,7 @@ class InformasiSaranaUser extends Controller
 {
     public function informasisaranauser()
     {
-        $tampildatasarana = Dbsarana::where('status', 'AKTIF')->get();
+        $tampildatasarana = Dbsarana::where('status', 'AKTIF')->get(); // Menampilkan data sarana yang aktif saja
         return view('post_admin.informasi_sarana_user', compact('tampildatasarana'));
 
     }

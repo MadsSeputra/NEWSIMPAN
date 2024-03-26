@@ -141,7 +141,7 @@
                       <div class="d-flex align-items-center">
                           <svg aria-hidden="true" class="bi flex-shrink-0 me-2" width="24" height="24" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1a.75.75 0 00-.75.75v6.5a.75.75 0 001.5 0V2.5A.75.75 0 008 1zM5.75 9a.75.75 0 01-.75-.75v-.5a.75.75 0 111.5 0v.5a.75.75 0 01-.75.75zm4.5 0a.75.75 0 01-.75-.75v-.5a.75.75 0 111.5 0v.5a.75.75 0 01-.75.75zM8 11.75a.75.75 0 00-.75.75v.5a.75.75 0 001.5 0v-.5a.75.75 0 00-.75-.75z"/></svg>
                           <div>
-                              <strong>Peringatan!</strong>
+                              <strong>Peringatan!!</strong>
                               <div>
                                   <ul class="mt-1.5 ml-4 list-unstyled">
                                       @foreach ($errors->all() as $error)

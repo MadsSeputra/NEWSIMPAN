@@ -27,7 +27,7 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-         //apabila pengguna berhasil login --> maka dilanjut ke proses pemilihan role apakah admin atau user
+         //apabila pengguna berhasil login --> maka dilanjut ke proses pemilihan role apakah admin atau pengguna
          // if auth = ppengecekan inputan ke dalam database
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
@@ -43,9 +43,8 @@ class AuthController extends Controller
             return redirect()->route('informasisaranauser');
         }
         Session()->flash('status', 'gagal');
-        Session()->flash('message', 'login anda gagal');
+        Session()->flash('message', 'Login anda gagal');
         return redirect()->route('login');
-
     }
 
 
@@ -55,27 +54,17 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('login');
-
     }
 
 
     public function register()
     {
         return view('register');
-
     }
 
     public function prosesregistrasi(Request $request)
     {
-        // $request->validate([
-        //     'nama' => 'required',
-        //     'no_telp' => 'required|numeric',
-        //     'alamat' => 'required',
-        //     'email' => 'required|unique:users',
-        //     'password' => 'required',
-        //     'password_confirm' => 'required|same:password',
-        // ]);
-
+        //Memasukkan data ke dalam model Userlog
         $user = new UserLog([
             'nama' => $request->nama,
             'email' => $request->email,
@@ -84,34 +73,33 @@ class AuthController extends Controller
             'no_telp' => $request->no_telp,
             
         ]);
-
-        $user->save();
+        $user->save(); // Method save data yang telah dimasukkan dalam instance diatas
         return redirect()->route('login')->with('registrasiBerhasil', true);
     }
 
     public function ubahpassword(Request $request)
     {
-
         $request->validate([
             'old_password' => 'required|current_password',
             'new_password' => 'required',
-            'new_password_confirm' => 'required|same:new_password',
+            'new_password_confirm' => 'required|same:new_password', //Same :new_pass memastikan bahwa field ini harus sama dengan field new_password
         ], [
-            'old_password.required' => 'Password lama harus diisi.',
-            'new_password.required' => 'Password baru harus diisi.',
-            'new_password_confirm.required' => 'Konfirmasi Password harus diisi.',
-            'new_password_confirm.same' => 'Konfirmasi Password harus sama dengan Password baru.',
+            'old_password.required' => 'Password lama harus diisi !',
+            'new_password.required' => 'Password baru harus diisi !',
+            'new_password_confirm.required' => 'Konfirmasi Password harus diisi !',
+            'new_password_confirm.same' => 'Konfirmasi Password harus sama dengan Password baru !',
         ]);
 
 
         if(Str::length(Auth::guard('web')->user()) > 0){
-            $user = UserLog::find(Auth::id());
+            $user = UserLog::find(Auth::id()); //memamnggil model userlog disesuaikan dengan id 
             $user->password = Hash::make($request->new_password);
             $user->save();
              // Logout pengguna setelah berhasil update password
             Auth::guard('web')->logout();
             // $request->session()->regenerate();
-            return redirect()->route('login')->with('ubahPassword', 'Password Berhasil Diubah');
+            return redirect()->route('login')->with('ubahPassword', 'Password Berhasil Diubah'); //kembali diarahkan ke menu login serta pesan flash yang memberi tahu pass diubah
+
         }elseif(Str::length(Auth::guard('admin')->user()) > 0){
             $admin = AdminLog::find(Auth::id());
             $admin->password = Hash::make($request->new_password);
@@ -164,12 +152,12 @@ class AuthController extends Controller
             : back()->withErrors(['email' => __($status)]);
     }
 
-    public function resetPassword($token)
+    public function resetPassword($token) // fungsi token untuk mengidentifikasi permintaan reset pass yang dikirim ke email ||
     {
         return view('reset-password', ['token' => $token]);
     }
 
-    public function processResetPassword(Request $request)
+    public function processResetPassword(Request $request) //mengirim data yang dikirim melalui form 
     {
         $request->validate([
             'token' => 'required',

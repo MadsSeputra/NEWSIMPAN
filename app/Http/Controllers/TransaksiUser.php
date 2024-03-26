@@ -31,7 +31,7 @@ class TransaksiUser extends Controller
     {
 
         $tambahpengajuan = Peminjaman::all();
-        $dbsaranas = Dbsarana::where('status', 'aktif')->get();
+        $dbsaranas = Dbsarana::where('status', 'aktif')->get(); // agar dapat meminjam sarana yang status aktif saja
 
         return view('post_admin.transaksi_user.tambah_pengajuan', [
             'dbsaranas' => $dbsaranas]

@@ -56,18 +56,18 @@ Route::get('/login', [AuthController::class,'proseslogin']);
 // -> name (' nama route ')
 Route::middleware('guest')->group(function () {
 //Roots Login dan Logout
-Route::get('/', [AuthController::class, 'login'])->name('login'); //fungsi name = mengubah nama route 
-Route::post('login', [AuthController::class, 'proseslogin'])->name('proseslogin');
-Route:: get('/resetpassword', [AuthController::class, 'resetpassword'])->name('resetpassword');
-Route:: get('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/registrasi', [AuthController::class, 'prosesregistrasi'])->name('prosesregistrasi');
-Route::get('/lupa-password', [AuthController::class, 'lupaPassword'])->name('lupaPassword');
-Route::post('/lupa-password', [AuthController::class, 'processLupaPassword'])->name('processlupaPassword');
-Route::get('/reset-password/{token}', [AuthController::class, 'resetPassword'])->name('password.reset');
-Route::post('/reset-password', [AuthController::class, 'processResetPassword'])->name('processResetPassword');
+Route::get('/', [AuthController::class, 'login'])->name('login'); //fungsi name = mengubah nama route  
+Route::post('login', [AuthController::class, 'proseslogin'])->name('proseslogin'); // proses autenticate role yang login ke sistem 
+Route:: get('/resetpassword', [AuthController::class, 'resetpassword'])->name('resetpassword'); //mengambil data reset 
+Route:: get('/register', [AuthController::class, 'register'])->name('register'); // reurn view register
+Route::post('/registrasi', [AuthController::class, 'prosesregistrasi'])->name('prosesregistrasi'); // mencakup proses pengiriman data ke database
+Route::get('/lupa-password', [AuthController::class, 'lupaPassword'])->name('lupaPassword');// return view resetpassword
+Route::post('/lupa-password', [AuthController::class, 'processLupaPassword'])->name('processlupaPassword');// proses mengirimkan data pass baru di form ubah password
+Route::get('/reset-password/{token}', [AuthController::class, 'resetPassword'])->name('password.reset'); // mencakup proses menampilkan form reset pass
+Route::post('/reset-password', [AuthController::class, 'processResetPassword'])->name('processResetPassword'); // mengirim data reset pass dari form 
 });    
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard'); 
 
     Route::get('/datasarana', [MasterDataController::class, 'datasarana'])->name('datasarana');
     Route::get('/tambahdatasarana', [MasterDataController::class, 'tambahdatasarana'])->name('tambahdatasarana');
@@ -114,7 +114,7 @@ Route::post('/pengajuan-insert', [TransaksiUser::class, 'store'])->name('insert-
 
 //Route untuk profil user
 Route:: get('/profiluser', [Usercontroller::class, 'profiluser'])->name('profiluser');
-Route::post('/ubah-password', [AuthController::class, 'ubahpassword'])->name('ubahpassword');
+Route::post('/ubah-password', [AuthController::class, 'ubahpassword'])->name('ubahpassword'); //mencakup proses mengirimkan data ubah pass ke dalam database
 Route::put('/profile-update-user', [UserController::class, 'profileuserupdate'])->name('profileuserupdate');
 
 

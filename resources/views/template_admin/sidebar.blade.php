@@ -5,22 +5,19 @@
 
 
     <ul class="sidebar-nav" id="sidebar-nav">
-      @if (Str::length(Auth::guard('admin')->user()) > 0)
+      @if (Str::length(Auth::guard('admin')->user()) > 0) <!-- otoritas autenticate milik admin-->
         <li class="nav-heading">Admin</li>
-
-      
-      </li><!-- End Dashboard Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('dashboard') }}">
           <i class="bi bi-box-arrow-in-right"></i>
-          <!-- href-->
           <span>Dashboard</span>
         </a>
-      </li><!-- End Login Page Nav -->
+      </li>
 
-      </li><!-- End masterdataNav -->
-
+      </li>
+      <!-- START MASTER DATA-->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-archive"></i><span>Master Data</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -37,8 +34,9 @@
             </a>
           </li>
         </ul>
-      </li><!-- End masterdataNav -->
+      </li><!-- END MENU MASTER DATA-->
 
+      <!-- START TRANASAKSI-->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-arrow-left-right"></i><span>Transaksi</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -55,8 +53,9 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Transaksi admin Nav -->
+      </li><!-- END MENU TRX ADMIN-->
 
+      <!-- START LAPORAN-->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-file-earmark-text"><span></i>Laporan</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -74,41 +73,31 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Laporan  Nav -->
-
-
-      {{-- <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('login') }}">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <!-- href-->
-          <span>Log out</span>
-        </a>
-      </li><!-- End Login Page Nav --> --}}
-
+      </li><!-- END MENU LAPORAN-->
     </ul>
 
 
     <!--TAMPILAN SIDE BAR USER-->
 
     <ul class="sidebar-nav" id="sidebar-nav">
-      @elseif (Str::length(Auth::guard('web')->user()) > 0)
+      @elseif (Str::length(Auth::guard('web')->user()) > 0) <!-- otoritas autenticate milik PENGGUNA-->
       <li class="nav-heading">User</li>
 
-    </li><!-- End Dashboard Nav -->
+    </li>
 
+    <!-- START INFO SARANA-->
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('informasisaranauser') }}">
         </i><span>Informasi Sarana</span>
       </a>
-      
-    </li><!-- End masterdataNav -->
+    </li><!-- END MENU INFO SARANA-->
 
+    <!-- START TRX PENGGUNA-->
     <li class="nav-item">
       <a class="nav-link collapsed" href="{{ route('transaksiuser') }}">
         </i><span>Transaksi Pengguna</span>
       </a>
-      
-    </li><!-- End Transaksi admin Nav -->
+    </li><!-- END TRX PENGGUNA-->
 
     
     @endif

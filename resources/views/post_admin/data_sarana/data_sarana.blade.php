@@ -62,7 +62,7 @@
                                     @php
                                     $startNumber = 1;
                                     @endphp
-                                    @foreach($datasarana as $data=>$item) <!-- Untuk menampilkan database sesuai dengan variabel di controller-->
+                                    @foreach($datasarana as $data=>$item) <!-- Untuk menampilkan database sesuai dengan variabel di controller || nama diubah menjadi item-->
                                     <tr>
                                         <td> <p>{{ $startNumber }}</p> </td>
                                         <td>Sar-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $item->id }}</td>
@@ -77,8 +77,8 @@
                                             <img class="featured-img img-fluid rounded" src="{{ asset('assets/img/imagekosong.jpg') }}" alt="{{ $item->nama }}" style="width: 100px; height: 100px;">
                                             @endif
                                         </td>
-                                        <td>
-                                            @if($item->status == 'AKTIF')
+                                        <td><!-- menambahkan status aktif dan nonaktif-->
+                                            @if($item->status == 'AKTIF') 
                                                 <span class="badge bg-success">{{ $item->status }}</span>
                                             @elseif($item->status == 'NON-AKTIF')
                                                 <span class="badge bg-danger">{{ $item->status }}</span>

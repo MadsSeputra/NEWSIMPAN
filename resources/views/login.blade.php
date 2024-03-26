@@ -46,7 +46,7 @@
                   <img src="assets/img/logo.png" alt="">
                   <span class="d-none d-lg-block">SIMPANSARANA</span>
                 </a>
-              </div><!-- End Logo -->
+              </div>
 
               <div class="card mb-3">
 
@@ -58,7 +58,7 @@
                   </div>
 
                   <!-- session flass saat halaman error -->
-                  @if (Session::has('status'))
+                  @if (Session::has('status')) <!-- flash session di AuthController-->
                   <div class="alert alert-danger" role="alert">
                     {{ Session::get('message') }}
                   </div>

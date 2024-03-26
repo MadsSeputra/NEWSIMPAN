@@ -69,39 +69,39 @@
                     <div class="col-12">
                       <label for="yourName" class="form-label">Nama Anda</label>
                       <input type="text" name="nama" class="form-control" id="nama" required>
-                      <div class="invalid-feedback">Tolong, masukkan nama anda!</div>
+                      <div class="invalid-feedback">Tolong, masukkan nama anda!</div> <!-- Tampilan Pesan ERROR-->
                     </div>
 
                     <form class="row g-3 needs-validation" novalidate>
                       <div class="col-12">
                         <label for="yourName" class="form-label">No Telepon</label>
                         <input type="number" name="no_telp" class="form-control" id="no_telp" required>
-                        <div class="invalid-feedback">Tolong, masukkan no telepon anda!</div>
+                        <div class="invalid-feedback">Tolong, masukkan no telepon anda!</div> <!-- Tampilan Pesan ERROR-->
                       </div>
 
                     <form class="row g-3 needs-validation" novalidate>
                       <div class="col-12">
                         <label for="yourName" class="form-label">Alamat</label>
                         <input type="text" name="alamat" class="form-control" id="alamat" required>
-                        <div class="invalid-feedback">Tolong, masukkan alamat anda!</div>
+                        <div class="invalid-feedback">Tolong, masukkan alamat anda!</div> <!-- Tampilan Pesan ERROR-->
                       </div>
 
                     <div class="col-12">
                       <label for="yourEmail" class="form-label">Email Anda</label>
                       <input type="email" name="email" class="form-control" id="email" required>
-                      <div class="invalid-feedback">Tolong masukkan email anda!</div>
+                      <div class="invalid-feedback">Tolong masukkan email anda!</div> <!-- Tampilan Pesan ERROR-->
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="password" required>
-                      <div class="invalid-feedback">Masukkan password anda!</div>
+                      <div class="invalid-feedback">Masukkan password anda!</div> <!-- Tampilan Pesan ERROR-->
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Konfirmasi Password</label>
                       <input type="password" name="password_confirm" class="form-control" id="password_confirm" required>
-                      <div class="invalid-feedback">Masukkan password anda!</div>
+                      <div class="invalid-feedback">Masukkan konfirmasi password anda!</div> <!-- Tampilan Pesan ERROR-->
                     </div>
 
                

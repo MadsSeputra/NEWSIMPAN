@@ -64,7 +64,7 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">SIMPANSARANA</h5>
-                    <p class="text-center small">Anda melupkan password, silakan untuk melakukan reset password agar bisa masuk ke akun anda</p>
+                    <p class="text-center small">Anda melupakan password, silakan untuk melakukan reset password agar bisa masuk ke akun anda</p>
                   </div>
 
                   <!-- session flass saat halaman error -->

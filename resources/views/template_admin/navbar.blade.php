@@ -18,15 +18,16 @@
         </li>
         <li class="nav-item dropdown pe-3">
 
+          <!-- Proses menberi tautan ke profil pengguna --> 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            @if (Str::length(Auth::guard('admin')->user()) > 0)
+            @if (Str::length(Auth::guard('admin')->user()) > 0) <!--otoritas autenticate milik admin -->
             <img src="{{ asset('assets/img/profile.png') }}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->nama}}</span>
-            @elseif (Str::length(Auth::guard('web')->user()) > 0)
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->nama}}</span> <!--menampilkan nama pengguna sesuai autentifikasinya-->
+            @elseif (Str::length(Auth::guard('web')->user()) > 0) <!--kondisional bila kondisei sebelum tidak dipenuhi maka ini di cek-->
             <img src="{{ asset('assets/img/profile.png') }}" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->nama}}</span>
             @endif
-          </a><!-- End Profile Iamge Icon -->
+          </a>
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
@@ -44,6 +45,7 @@
                 <span>My Profile</span>
               </a>
             </li>
+
             @elseif (Str::length(Auth::guard('web')->user()) > 0)
               <h6>{{ Auth::user()->nama}}</h6>
             </li>
@@ -67,7 +69,8 @@
             <li>
                 <!-- Button trigger modal -->
                 <button type="button" class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                  <i class="bi bi-box-arrow-right"></i>
+                  <!-- data-bs-toggle modal = jika tombol di klik akan muncul modal atau pop up || Edit modal di layout app_admin-->
+                  <i class="bi bi-box-arrow-right"></i> <!--icon logout-->  
                   <span>Log Out</span>
                 </button>
             </li>
