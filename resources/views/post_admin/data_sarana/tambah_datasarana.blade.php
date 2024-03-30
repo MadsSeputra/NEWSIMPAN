@@ -1,7 +1,7 @@
 @extends('layouts.app_admin')
 @section('action')
 @section('title', 'Tambah Data Sarana')
-{{-- @section('navbar', 'Pengemudi')
+{{-- @section('navbar', '')
 @section('data', 'Dashboard') --}}
 @endsection
 <main id="main" class="main">
@@ -41,7 +41,7 @@
                   <div class="col-12">
                     <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
                     <div class="col-sm-10">
-                      <input class="form-control" type="file" name="images[]" multiple data-max_length="20">
+                      <input class="form-control" type="file" name="images[]" multiple data-max_length="20" required>
                     </div>
                   </div>             
                 <div class="text-center">
