@@ -49,7 +49,7 @@ class MasterDataController extends Controller
             $request->validate([
                 'nama_sarana' => 'required',
                 'jumlah_sarana' => 'required|numeric|min:1',
-                'foto' => 'required',
+                'foto' => '',
             ], [
                 'required' => 'Kolom :attribute harus diisi.',
                 'numeric' => 'Kolom :attribute harus berupa angka.',
