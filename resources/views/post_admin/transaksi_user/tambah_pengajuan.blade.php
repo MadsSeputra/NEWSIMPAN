@@ -92,30 +92,38 @@
           </div>
       </div>
     </section>
+   
+
     <script>
       window.onload = function() {
-        // Mendapatkan elemen input tanggal mulai
-        var startDateInput = document.getElementById("tanggal_pinjam");
-        
-        // Mendapatkan elemen input tanggal selesai
-        var endDateInput = document.getElementById("tanggal_kembali");
-        
-        // Mendapatkan tanggal saat ini
-        var today = new Date();
-        
-        // Menambahkan 1 hari ke tanggal saat ini
-        var minDate = new Date(today);
-        minDate.setDate(today.getDate() + 1);
-        
-        // Mengubah format tanggal menjadi YYYY-MM-DD (sesuai format input type date)
-        var minDateFormatted = minDate.toISOString().slice(0, 10);
-        
-        // Mengatur atribut min pada input tanggal mulai
-        startDateInput.min = minDateFormatted;
-        
-        // Mengatur atribut min pada input tanggal selesai
-        endDateInput.min = minDateFormatted;
+          // Mendapatkan elemen input tanggal pinjam
+          var startDateInput = document.getElementById("tanggal_pinjam");
+          
+          // Mendapatkan elemen input tanggal kembali
+          var endDateInput = document.getElementById("tanggal_kembali");
+          
+          // Mendapatkan tanggal saat ini
+          var today = new Date();
+          
+          // Menambahkan 30 hari ke tanggal saat ini
+          var maxDate = new Date(today);
+          maxDate.setDate(today.getDate() + 30);
+          
+          // Mengubah format tanggal menjadi YYYY-MM-DD (sesuai format input type date)
+          var maxDateFormatted = maxDate.toISOString().slice(0, 10);
+          
+          // Mengatur atribut max pada input tanggal kembali
+          endDateInput.max = maxDateFormatted;
+          
+          // Mengatur atribut max pada input tanggal pinjam
+          startDateInput.max = maxDateFormatted;
+  
+          // Mengatur atribut min pada input tanggal pinjam
+          var minDateFormatted = today.toISOString().slice(0, 10);
+          endDateInput.min = minDateFormatted;
+          startDateInput.min = minDateFormatted;
       }
   </script>
+
   </main><!-- End #main -->
 
