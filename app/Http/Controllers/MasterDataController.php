@@ -29,6 +29,8 @@ class MasterDataController extends Controller
 
         // Mengambil jumlah yang telah dipinjam dari tabel Peminjaman
         $jumlahDipinjam = Peminjaman::count('jumlah');
+      
+        
 
     return view('post_admin.data_sarana.data_sarana', compact('datasarana', 'jumlahDipinjam'));
         
@@ -75,9 +77,24 @@ class MasterDataController extends Controller
         $datasarana = Dbsarana::findOrFail($id);
         return view('post_admin.data_sarana.edit_datasarana', ['datasarana' => $datasarana]);
     }
+
+
     public function update(Request $request, $id)
     {
         $datasarana = Dbsarana::findOrFail($id);
+          // Periksa apakah jumlah terpakai tidak melebihi jumlah tersedia
+          $jumlah_terpakai = $datasarana->jumlah_terpakai;
+          $jumlah_tersedia = $datasarana->jumlah_sarana - $jumlah_terpakai;
+      
+          if ($request->jumlah_sarana < $jumlah_terpakai) {
+              // Tampilkan pesan alert jika jumlah terpakai melebihi jumlah tersedia
+              return redirect()->back()->with('error', 'Jumlah terpakai tidak bisa melebihi jumlah tersedia');
+          }
+
+           // Jika jumlah_terpakai masih lebih dari 0 dan status tidak diubah menjadi NON-AKTIF, kembalikan dengan pesan error || && $request->status != 'NON-AKTIF'
+        if ($datasarana->jumlah_terpakai > 0 ) {
+            return redirect()->back()->with('error', 'Data tidak dapat diubah karena jumlah terpakai masih lebih dari 0');
+        }
 
         // Perbarui data Dbsarana dengan input yang diterima
         $datasarana->update($request->all());
@@ -118,10 +135,19 @@ class MasterDataController extends Controller
     public function delete($id)
     {
         $delete =  Dbsarana::find($id);
+        // $datasarana = Dbsarana::findOrFail($id);
 
         if (!$delete) {
             return abort(404, 'delete not found');
         }
+
+        //   // Memeriksa apakah jumlah terpakai lebih dari 0
+        //   if ($datasarana->jumlah_terpakai > 0) {
+        //     return redirect()->back()->with('error', 'Data tidak dapat dihapus karena jumlah terpakai masih lebih dari 0');
+        //  }
+         
+        //  // Jika jumlah terpakai adalah 0, maka lanjutkan untuk menghapus sarana
+        //  $datasarana->delete();
 
         $delete->delete();
 

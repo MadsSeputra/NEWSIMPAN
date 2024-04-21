@@ -36,4 +36,9 @@ class Peminjaman extends Model
     {
         return strtotime($this->tanggal_kembali) > strtotime($this->tanggal_pinjam);
     }
+
+    public function kerusakan()
+    {
+        return $this->hasOne(Kerusakan::class, 'id_peminjaman', 'id');
+    }
 }

@@ -31,6 +31,7 @@ class DashboardController extends Controller
         $peminjamanditerima = Peminjaman::with(['userLog', 'dbsarana'])
         ->where('status', 'DITERIMA')
         ->get();
+        
         // Menghitung nomor urut pada halaman saat ini
         $currentPage = request()->get('page', 1);
         $itemsPerPage = 5;

@@ -8,7 +8,7 @@
 <!-- Start Page Title -->
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Informasi Sarana User</h1>
+      <h1>Informasi Sarana</h1>
       <br>
     </div> 
 <!-- End Page Title -->
@@ -25,7 +25,8 @@
             $itemsPerPage = 5; // Jumlah item per halaman (sesuaikan dengan paginate() Anda)
             $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
             @endphp
-
+    
+        <div class="table-responsive">
             <!-- Table with stripped rows -->
             <table class="table datatable">
               <thead>
@@ -38,28 +39,30 @@
                 </tr>
 
               </thead>
-              <tbody>
+             <tbody>
                 @foreach ($tampildatasarana as $item)
+                @if ((int)$item->jumlah_sarana - (int)$item->jumlah_terpakai > 0)
                     <tr>
                         <td> <p>{{ $startNumber + $loop->index }}</p> </td>
                         <td>Sar-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $item->id }}</td>
                         <td>{{ $item->nama_sarana }}</td>
                         <td>{{ (int)$item->jumlah_sarana - (int)$item->jumlah_terpakai }}</td>
                         <td>
-                          @if($item->images && $item->images->count())
-                          <img class="featured-img img-fluid rounded" src="{{ asset('storage/' . $item->images->src) }}" alt="{{ $item->nama }}" style="width: 100px; height: 100px;">
-                          @else
-                              <img class="featured-img img-fluid rounded" src="{{ asset('assets/img/imagekosong.jpg') }}" alt="{{ $item->nama }}" style="width: 100px; height: 100px;">
-                          @endif                  
-                      </td>
+                            @if($item->images && $item->images->count())
+                                <img class="featured-img img-fluid rounded" src="{{ asset('storage/' . $item->images->src) }}" alt="{{ $item->nama }}" style="width: 100px; height: 100px;">
+                            @else
+                                <img class="featured-img img-fluid rounded" src="{{ asset('assets/img/imagekosong.jpg') }}" alt="{{ $item->nama }}" style="width: 100px; height: 100px;">
+                            @endif                  
+                        </td>
                     </tr>
-                    
-                @endforeach
+                @endif
+            @endforeach
     
                
               </tbody>
             </table>
             <!-- End Table with stripped rows -->
+        </div>
 
 
   </div>

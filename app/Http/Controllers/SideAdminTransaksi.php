@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Mail\SendEmail;
 use App\Models\Dbsarana;
+use App\Models\Kerusakan;
 use App\Models\Peminjaman;
 use App\Mail\SendEmailBatal;
+use App\Mail\SendEmailNotifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -52,8 +54,14 @@ class SideAdminTransaksi extends Controller
         $currentPage = request()->get('page', 1);
         $itemsPerPage = 5;
         $startNumber = ($currentPage - 1) * $itemsPerPage + 1;
+        
+        $kerusakan = Kerusakan::all();
+        // Menghitung nomor urut pada halaman saat ini
+        $currentPage2 = request()->get('page', 1);
+        $itemsPerPage2 = 5;
+        $startNumber2 = ($currentPage2 - 1) * $itemsPerPage2 + 1;
      
-        return view('post_admin/pengembalian_admin/transaksi_pengembalian', compact('pengembalian', 'startNumber', 'today'));
+        return view('post_admin/pengembalian_admin/transaksi_pengembalian', compact('pengembalian', 'startNumber','startNumber2', 'kerusakan', 'today'));
     }
 
     public function processKonfirmasiPeminjaman(Request $request, $id)
@@ -74,6 +82,7 @@ class SideAdminTransaksi extends Controller
 
         // Mail::to($request->recipient_email) // Menggunakan alamat email penerima dari input form
         //     ->send(new SendEmail($data));
+        
          // Kirim email konfirmasi
          $data = [
             'id_peminjam' => $konfirmasipeminjaman->id,
@@ -108,9 +117,16 @@ class SideAdminTransaksi extends Controller
     }
 
 
-    public function selesaikanPesanan($id)
+    public function selesaikanPesanan(Request $request, $id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
+
+        // Menyimpan alasan kerusakan ke dalam tabel Kerusakan
+        Kerusakan::create([
+            'id_peminjaman' => $request->id_peminjaman,
+            'keterangan' => $request->keterangan,
+        ]);
+
         $peminjaman->status = 'SELESAI';
         $peminjaman->save();
 
@@ -122,4 +138,34 @@ class SideAdminTransaksi extends Controller
         return redirect()->route('transaksipengembalian')->with('selesai', 'Pinjaman berhasil dikembalikan.');
     }
 
+    public function hapusKerusakan($id)
+    {
+        // Cari kerusakan berdasarkan ID
+        $kerusakan = Kerusakan::findOrFail($id);
+
+        // Hapus kerusakan
+        $kerusakan->delete();
+
+        return redirect()->route('transaksipengembalian')->with('hapus', 'Data Keterangan Kerusakan berhasil dihapus');
+    }
+    
+    public function processPengingatNotifikasi(Request $request, $id)
+    {
+        $notifikasi = Peminjaman::findOrFail($id);
+
+        $data = [
+            'id_peminjam' => $notifikasi->id,
+            'nama' => $notifikasi->userLog->nama,
+            'nama_sarana' => $notifikasi->dbsarana->nama_sarana,
+            'jumlah' => $notifikasi->jumlah,
+            'tanggal_kembali' => $notifikasi->tanggal_kembali,
+        ];
+
+        Mail::to($request->recipient_email) // Menggunakan alamat email penerima dari input form
+            ->send(new SendEmailNotifikasi($data));
+        return redirect()->route('transaksipengembalian')->with('notifikasi', 'Notifikasi berhasil dikirim');
+    }
+
+
 }
+

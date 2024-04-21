@@ -40,7 +40,7 @@
         </div>
         <div class="footer">
             <p>Salam hormat,</p>
-            <p>SIM Pinjam Sarana</p>
+            <p>Banjar Mertha Rauh | SIM PINJAM SARANA</p>
         </div>
     </div>
 </body>

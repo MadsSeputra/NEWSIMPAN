@@ -14,6 +14,11 @@
 
     <section class="section">
       <div class="row">
+        @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    {{ Session::get('error') }}
+                </div>
+            @endif
         <div class="card">
             <div class="card-body">
               <h5 class="card-title">Edit data sarana</h5>

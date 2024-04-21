@@ -7,7 +7,7 @@
 
 @section('content')
 
-<main id="main" class="main">
+<main id="main" class="main" > <!-- style="background-color: rgb(16, 179, 255) || Untuk ubah warna backgound || taruh setelah class="main"-->
 
     <div class="pagetitle">
       <h1>Dashboard</h1>

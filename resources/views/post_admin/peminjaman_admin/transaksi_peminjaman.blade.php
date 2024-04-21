@@ -32,6 +32,10 @@
                 <div class="alert alert-danger" role="alert">
                     {{ session('batal') }}
                 </div>
+                @elseif(Session::has('notifikasi'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('notifikasi') }}
+                </div>
                 @endif
                 <!-- End JS Validasi  -->
 
@@ -74,6 +78,8 @@
                                                     <td>{{ $peminjaman->keterangan }}</td>
                                                     <td><span class="badge bg-warning ">{{ $peminjaman->status }}</span></td>
                                                     <td class="d-flex align-items-center mt-4">
+                                                        
+                                                        <!-- Aksi konfirmasi peminjaman -->  
                                                         <form action="{{ route('konfirmasipeminjaman', $peminjaman->id) }}" method="POST">
                                                             @csrf
                                                             <div class="form-group d-none">
@@ -111,6 +117,8 @@
                                                                 </div>
                                                             </div>
                                                         </form>
+                                                        
+                                                        <!-- aksi batal peminjaman -->
                                                         <form action="{{ route('batalpeminjaman', $peminjaman->id) }}" method="POST">
                                                             @csrf
                                                             @method('PATCH')
@@ -118,7 +126,7 @@
                                                                 <input type="email" name="recipient_email" value="{{ $peminjaman->userLog->email }}" placeholder="Alamat Email Penerima" required>
                                                             </div>
                                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#batalModal-{{ $peminjaman->id }}">
-                                                                <i class="bi bi-exclamation-octagon"></i>
+                                                                <i class="bi bi-x-circle"></i>
                                                             </button>
                                                             <!-- Modal -->
                                                             <div class="modal fade" id="batalModal-{{ $peminjaman->id }}" tabindex="-1" aria-labelledby="batalModalLabel" aria-hidden="true">
@@ -128,6 +136,7 @@
                                                                             <h5 class="modal-title" id="batalModalLabel">Pembatalan</h5>
                                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
+                                                                        
                                                                         <div class="modal-body">
                                                                             <form action="{{ route('batalpeminjaman', $peminjaman->id) }}" method="POST">
                                                                                 @csrf
@@ -181,25 +190,90 @@
                                                     <th scope="col">Tanggal Kembali</th>
                                                     <th scope="col">Ket.</th>
                                                     <th scope="col">Status</th>
+                                                    <th scope="col">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($peminjamanditerima as $key => $peminjamanditerima)
                                                 <tr>
                                                     <td>{{ $startNumber + $key }}</td>
-                                                    <td>TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $peminjamanditerima->id }}</td>
-                                                    <td>{{ $peminjamanditerima->userLog->nama }}</td>
-                                                    <td>{{ $peminjamanditerima->userLog->no_telp }}</td>
-                                                    <td>{{ $peminjamanditerima->dbsarana->nama_sarana }}</td>
-                                                    <td>{{ $peminjamanditerima->jumlah }}</td>
-                                                    <td>{{ $peminjamanditerima->tanggal_pinjam }}</td>
                                                     <td>
-                                                        <span class="{{ $today > $peminjamanditerima->tanggal_kembali ? 'text-danger' : '' }}">
+                                                        <!-- MERAHKAN TEXT JIKA PEMINJAMAN DITERIMA LEBIH DARI TANGGAL KEMBALI-->
+                                                        
+                                                        <span class="{{ $today > $peminjamanditerima->tanggal_kembali ? 'bg-danger text-white' : '' }}">
+                                                        TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $peminjamanditerima->id }}</td>
+                                                    <td>
+                                                        <span class="{{ $today > $peminjamanditerima->tanggal_kembali ? 'bg-danger text-white' : '' }}">
+                                                            {{ $peminjamanditerima->userLog->nama }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="{{ $today > $peminjamanditerima->tanggal_kembali ? 'bg-danger text-white' : '' }}">
+                                                            {{ $peminjamanditerima->userLog->no_telp }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="{{ $today > $peminjamanditerima->tanggal_kembali ? 'bg-danger text-white' : '' }}">
+                                                            {{ $peminjamanditerima->dbsarana->nama_sarana }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="{{ $today > $peminjamanditerima->tanggal_kembali ? 'bg-danger text-white' : '' }}">
+                                                            {{ $peminjamanditerima->jumlah }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="{{ $today > $peminjamanditerima->tanggal_kembali ? 'bg-danger text-white' : '' }}">
+                                                            {{ $peminjamanditerima->tanggal_pinjam }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="{{ $today > $peminjamanditerima->tanggal_kembali ? 'bg-danger text-white' : '' }}">
                                                             {{ $peminjamanditerima->tanggal_kembali }}
                                                         </span>
                                                     </td>
-                                                    <td>{{ $peminjamanditerima->keterangan }}</td>
+                                                    <td>
+                                                        <span class="{{ $today > $peminjamanditerima->tanggal_kembali ? 'bg-danger text-white' : '' }}">
+                                                            {{ $peminjamanditerima->keterangan }}
+                                                        </span>
+                                                    </td>
                                                     <td><span class="badge bg-success">{{ $peminjamanditerima->status }}</span></td>
+                                                     <td class="d-flex align-items-center mt-4">
+                                                        <form action="{{ route('notifikasipengingat', $peminjamanditerima->id) }}" method="POST">
+                                                            @csrf
+                                                            <div class="flex items-center d-none">
+                                                                <input type="email" name="recipient_email" value="{{ $peminjamanditerima->userLog->email }}" placeholder="Alamat Email Penerima" required>
+                                                            </div>
+                                                            <button type="button" class="btn btn-success" style="margin-right: 5px;" data-bs-toggle="modal" data-bs-target="#konfirmasiModal-{{ $peminjamanditerima->id }}">
+                                                                Pengingat
+                                                            </button>
+                                                            
+                                                            
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="konfirmasiModal-{{ $peminjamanditerima->id }}" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Pinjaman</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <!-- Isi konten modal di sini -->
+                                                                            Yakin Ingin Mengirim Notifikasi Pengingat Pinjaman ID: TR-{{ now()->year }}{{ str_pad(now()->month, 2, '0', STR_PAD_LEFT) }}{{ $peminjamanditerima->id }}
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                            <form action="{{ route('notifikasipengingat', $peminjamanditerima->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <button type="submit" class="btn btn-success">Konfirmasi</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </td>
+                                                    
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -215,3 +289,4 @@
     </div>
 </main>
 @endsection
+	

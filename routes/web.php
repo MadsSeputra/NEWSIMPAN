@@ -82,12 +82,15 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/dataterdaftar', [MasterDataController::class, 'dataterdaftar'])->name('dataterdaftar') ;
 
+    // KELOLA TRANSAKSI
     // Jembatan penghubung controler side admin transaksi dengan View admin 
     Route::get('/transaksipeminjaman', [SideAdminTransaksi::class, 'transaksipeminjaman'])->name('transaksipeminjaman');
     Route::get('/transaksipengembalian', [SideAdminTransaksi::class, 'transaksipengembalian'])->name('transaksipengembalian');
+    Route::delete('/kerusakan/{id}', [SideAdminTransaksi::class, 'hapusKerusakan'])->name('hapuskerusakan');
     Route::post('/peminjaman-konfirmasi/{id}', [SideAdminTransaksi::class, 'processKonfirmasiPeminjaman'])->name('konfirmasipeminjaman');
     Route::patch('/batal-peminjaman/{id}', [SideAdminTransaksi::class, 'batalkanPesanan'])->name('batalpeminjaman');
     Route::patch('/selesai-peminjaman/{id}', [SideAdminTransaksi::class, 'selesaikanPesanan'])->name('selesaipeminjaman');
+    Route::post('/peminjaman-notofikasi/{id}', [SideAdminTransaksi::class, 'processPengingatNotifikasi'])->name('notifikasipengingat');
 
     //Jembatan hub controller SideAdmin Laporan 
     Route::get('/laporanpeminjaman', [SideAdminLaporan::class, 'laporanpeminjaman'])->name('laporanpeminjaman');
@@ -111,6 +114,10 @@ Route::get('/informasisaranauser', [InformasiSaranaUser::class, 'informasisarana
 Route:: get('/transaksiuser', [TransaksiUser::class, 'transaksiuser'])->name('transaksiuser');
 Route:: get('/tambahpengajuan', [TransaksiUser::class, 'tambahpengajuan'])->name('tambahpengajuan');
 Route::post('/pengajuan-insert', [TransaksiUser::class, 'store'])->name('insert-pengajuan');
+
+//Route ubah pengajuan peminjaman
+Route::get('/editpengajuan/{id}', [TransaksiUser::class, 'editpengajuan'])->name('editpengajuan');
+Route::put('/pengajuan-update/{id}', [TransaksiUser::class, 'update'])->name('update-pengajuan');
 
 //Route untuk profil user
 Route:: get('/profiluser', [Usercontroller::class, 'profiluser'])->name('profiluser');
